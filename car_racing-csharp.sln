@@ -1,0 +1,43 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{50A29444-7EE3-2360-AECC-1D3E1CF22AD7}") = "car_racing", "Assembly-CSharp-vs.csproj", "{1936C444-5B43-9D0D-ED5B-F24DCCCBD19E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1936C444-5B43-9D0D-ED5B-F24DCCCBD19E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1936C444-5B43-9D0D-ED5B-F24DCCCBD19E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1936C444-5B43-9D0D-ED5B-F24DCCCBD19E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1936C444-5B43-9D0D-ED5B-F24DCCCBD19E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+			GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 120
+		$1.TabsToSpaces = False
+		$1.EolMarker = Unix
+		$1.inheritsSet = VisualStudio
+		$1.inheritsScope = text/plain
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabWidth = 4
+		$3.EolMarker = Unix
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+	EndGlobalSection
+
+EndGlobal

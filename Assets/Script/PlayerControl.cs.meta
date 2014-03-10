@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: d14728f6bbc32d347a382ffbf7b3caf9
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - CoinLabel: {instanceID: 0}
+  - collectCoinSound: {fileID: 8300000, guid: d506cdc9e61fda049adf2ccc717c4ed6, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
