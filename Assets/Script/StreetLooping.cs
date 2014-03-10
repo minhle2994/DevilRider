@@ -10,8 +10,8 @@ public class StreetLooping : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Camera.main.transform.position.z >= (this.transform.position.z + 20)) {
-			this.transform.position += new Vector3(0, 0, 100);
+		if (Camera.main.transform.position.z >= (this.transform.position.z + 10)) {
+			this.transform.position += new Vector3(0, 0, 120);
 		}
 	}
 }

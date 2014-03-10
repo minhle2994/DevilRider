@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
-    public float MovingSpeed = 15.0f;                      // Tốc độ di chuyển của xe
+    public float MovingSpeed = 20f;                      // Tốc độ di chuyển của xe
 	public float jumpSpeed = 10.0f;
 	public float gravity = 20.0f;
     private Vector3 AccelerometerDirection;             // Trục cảm ứng nghiên
@@ -50,7 +50,7 @@ public class PlayerControl : MonoBehaviour {
 		this.GetComponent<CharacterController>().Move (moveDirection * Time.deltaTime);
 
 		// Camera cũng phải chạy theo, giữ 1 khoảng cách nhất định với xe
-        Camera.main.transform.position = new Vector3(0, transform.position.y + 4, transform.position.z - 10);
+        Camera.main.transform.position = new Vector3(0, transform.position.y + 7, transform.position.z - 11);
         
         if (AccelerometerDirection.x > AccelerometerSensitivity)
         {
