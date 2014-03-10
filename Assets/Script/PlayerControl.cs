@@ -101,6 +101,12 @@ public class PlayerControl : MonoBehaviour {
 	}
 
     void OnTriggerEnter (Collider other){
+		if (other.name == "Car") {
+			other.renderer.enabled = false;
+			PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + CoinNum);
+			Application.LoadLevel(2);
+		}
+
 		if (other.name == "Coin") {
             Vector3 np = other.transform.position;
             np.x = 0;
@@ -122,12 +128,6 @@ public class PlayerControl : MonoBehaviour {
         }
     }
 
-	void OnCollisionEnter(Collision other){
-		if (other.collider.name == "Car") {
-			other.collider.renderer.enabled = false;
-			PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + CoinNum);
-			Application.LoadLevel(2);
-		}
-	}
+
 }
  
