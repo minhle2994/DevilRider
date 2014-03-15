@@ -1,8 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Intro.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\PlayerControl.cs">
     <Files>
-      <File FileName="Assets\Script\Intro.cs" Line="31" Column="3" />
+      <File FileName="Assets\Script\HighScore.cs" Line="24" Column="10" />
+      <File FileName="Assets\Script\PlayerControl.cs" Line="101" Column="6" />
+      <File FileName="Assets\Script\CountingScore.cs" Line="12" Column="3" />
+      <File FileName="Assets\Script\EnterName.cs" Line="12" Column="15" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

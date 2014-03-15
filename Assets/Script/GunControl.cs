@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CoinControl : MonoBehaviour {
+public class GunControl : MonoBehaviour {
+	public int numberOfBullet = 0;
+	public GameObject player;
+	public PlayerControl playerControl;
 	// Use this for initialization
 	void Start () {
-
+		player = GameObject.Find ("DevilRider");
+		playerControl = player.GetComponent<PlayerControl> ();
 	}
 	
 	// Update is called once per frame
@@ -18,12 +22,15 @@ public class CoinControl : MonoBehaviour {
 				this.renderer.enabled = true;
 		}
 	}
+
 	void OnTriggerEnter (Collider other){
 		if (other.name == "DevilRider") {
 			Vector3 np = transform.position;
 			np.x = 0;
 			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));
 			transform.position = np;
+			numberOfBullet = 3;
+			playerControl.devilRiderAnimator.SetBool("An_sung", true);
 		}
 	}
 }

@@ -16,7 +16,7 @@ public class HighScore : MonoBehaviour {
 		for (int i=0; i<10; i++){
 			GUI.Label (new Rect (Screen.width/3 - 30, Screen.height/4 + i *25, Screen.width, Screen.height / 10),
 			           i + "\t\t" + PlayerPrefs.GetString("Rank" + i.ToString() + "Name") + 
-			           PlayerPrefs.GetInt("Rank" + i.ToString() + "Name"));			
+			           PlayerPrefs.GetInt("Rank" + i.ToString() + "Score"));			
 		}
 
         if (GUI.Button (new Rect (Screen.width / 2 - 45, 4*Screen.height / 5, 90, 30), "BACK")) {
