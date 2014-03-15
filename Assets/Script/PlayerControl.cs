@@ -87,11 +87,24 @@ public class PlayerControl : MonoBehaviour {
 		Time.timeScale = 0;
 		while (Time.realtimeSinceStartup - currentTime < 4)
 			yield return null;
-		Application.LoadLevel(2);
+		for (int i=0; i<10; i++){
+			
+			if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Rank" + i.ToString() + "Name")){
+				Debug.Log(PlayerPrefs.GetInt("Rank" + i.ToString() + "Score"));
+				for (int j = 9; j>i; j--){
+					PlayerPrefs.SetString("Rank" + j.ToString() + "Name", PlayerPrefs.GetString("Rank" + (j-1).ToString() + "Name"));
+					PlayerPrefs.SetInt("Rank" + j.ToString() + "Score", PlayerPrefs.GetInt("Rank" + (j-1).ToString() + "Score"));
+				}
+				Application.LoadLevel(5);
+			}
+		}
+		//Application.LoadLevel(3);
 	}
-
-    void OnTriggerEnter (Collider other){
+	
+	void OnTriggerEnter (Collider other){
 		if (other.name == "Car") {
+			other.renderer.enabled = false;
+
 			if(nitroControl.nitroState == true || MovingSpeed > 40f){
 				Vector3 np = other.transform.position;
 				np.x = 0;

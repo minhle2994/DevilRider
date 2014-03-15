@@ -25,12 +25,13 @@ public class CountingScore : MonoBehaviour {
 
 		for (int i=0; i < childNum; i++){
 			Transform child = transform.GetChild(i);
-			if (child.position.z < Camera.main.transform.position.z && isCounted[i] == 0){
+			if (child.position.z < DevilRider.transform.position.z && isCounted[i] == 0){
 				Score ++;
 				isCounted[i] = 1;
+				Debug.Log(Score);
 				ScoreLabel.text = ScoreLabel.text.Substring(0, 6) + Score.ToString();
 			}
-			if (child.position.z > Camera.main.transform.position.z && isCounted[i] == 1){
+			if (child.position.z > DevilRider.transform.position.z && isCounted[i] == 1){
 				isCounted[i] = 0;
 			}			 
 			float dist = child.position.z - DevilRider.transform.position.z;
@@ -39,9 +40,6 @@ public class CountingScore : MonoBehaviour {
                 nearestDist = dist;
 				Debug.Log(DevilRider.transform.position.z);
             }
-
-            if (Score > PlayerPrefs.GetInt("highScore"))
-                PlayerPrefs.SetInt("highScore", Score);
 		}
 		if (isShooting) 
 		{
@@ -58,6 +56,9 @@ public class CountingScore : MonoBehaviour {
 				}
 			}
 		}
+		PlayerPrefs.SetInt("Score", Score);
+		//Debug.Log (nearestDist);
+
 		if (nearestDist > 2 && nearestDist < 25 && PlayerPrefs.GetInt ("canShoot") > 0) {
             Vector3 tmp = transform.GetChild(nearestObj).position;
 			aim.transform.position = new Vector3(DevilRider.transform.position.x, tmp.y, tmp.z - 1);
