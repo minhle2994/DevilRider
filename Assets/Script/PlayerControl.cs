@@ -15,6 +15,7 @@ public class PlayerControl : MonoBehaviour {
 	public float currentTime = 0;
 	public GameObject nitroItem;
 	public NitroControl nitroControl;
+	public GameObject Sung;
 
 	//public bool canShoot = false;
     void Start () {
@@ -24,6 +25,7 @@ public class PlayerControl : MonoBehaviour {
 		devilRiderAnimator.SetBool ("Dead", false);
 		nitroItem = GameObject.Find("Nitro");
 		nitroControl = nitroItem.GetComponent<NitroControl> ();
+		Sung.renderer.enabled = false;
     }
     
 	void Update () {
@@ -64,12 +66,12 @@ public class PlayerControl : MonoBehaviour {
 		if (AccelerometerDirection.x > AccelerometerSensitivity)
 		{
 			// Khi nghiên phone thì cho xe quẹo trái
-			transform.Rotate (new Vector3 (0, 30 * Time.deltaTime, 0), Space.Self);
+			transform.Rotate (new Vector3 (0, 30 * Time.deltaTime, -30 * Time.deltaTime), Space.Self);
 		}
 		else if (AccelerometerDirection.x < -AccelerometerSensitivity)
 		{
 			// Quẹo phải
-			transform.Rotate (new Vector3 (0, -30 * Time.deltaTime, 0), Space.Self);
+			transform.Rotate (new Vector3 (0, -30 * Time.deltaTime, 30 * Time.deltaTime), Space.Self);
 		}
 		else
 		{
@@ -127,7 +129,8 @@ public class PlayerControl : MonoBehaviour {
 		}
 
         if (other.name == "Gun") {
-		    PlayerPrefs.SetInt("canShoot", 1);
+			PlayerPrefs.SetInt("canShoot", 3);
+		 	Sung.renderer.enabled = true;
         }
     }
 	

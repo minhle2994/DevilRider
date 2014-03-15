@@ -6,6 +6,7 @@ public class CountingScore : MonoBehaviour {
 	public int Score = 0;
 	int[] isCounted = new int[10];
 	public GameObject aim, DevilRider;
+	public GameObject sung;
 	// Use this for initialization
 	void Start () {
         aim.transform.renderer.enabled = false;
@@ -28,17 +29,17 @@ public class CountingScore : MonoBehaviour {
 			if (child.position.z > DevilRider.transform.position.z && isCounted[i] == 1){
 				isCounted[i] = 0;
 			}			 
-
 			float dist = child.position.z - DevilRider.transform.position.z;
             if (dist > 0 && (nearestDist < 0 || nearestDist > dist)) {
                 nearestObj = i;
                 nearestDist = dist;
+				Debug.Log(DevilRider.transform.position.z);
             }
 		}
 		PlayerPrefs.SetInt("Score", Score);
 		//Debug.Log (nearestDist);
 
-		if (nearestDist > 2 && nearestDist < 15 && PlayerPrefs.GetInt ("canShoot") == 1) {
+		if (nearestDist > 2 && nearestDist < 25 && PlayerPrefs.GetInt ("canShoot") > 0) {
             Vector3 tmp = transform.GetChild(nearestObj).position;
 			aim.transform.position = new Vector3(DevilRider.transform.position.x, tmp.y, tmp.z - 1);
             aim.transform.renderer.enabled = true;
@@ -50,8 +51,12 @@ public class CountingScore : MonoBehaviour {
                 transform.GetChild(nearestObj).position = np;
                 Score = Score + 5;
                 ScoreLabel.text = ScoreLabel.text.Substring(0, 6) + Score.ToString();
-                PlayerPrefs.SetInt("canShoot", 0);
-                aim.transform.renderer.enabled = false;
+                PlayerPrefs.SetInt("canShoot", PlayerPrefs.GetInt("canShoot")-1);
+				if (PlayerPrefs.GetInt("canShoot")==0)
+				{
+					sung.renderer.enabled = false;
+                	aim.transform.renderer.enabled = false;
+				}
             }
         }
 		else 
