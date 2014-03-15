@@ -10,6 +10,9 @@ public class PlayerControl : MonoBehaviour {
 	public GUIText CoinLabel;
 	public int CoinNum = 0;
 	public AudioClip collectCoinSound;
+	public AudioClip crashSound;
+	public AudioClip gunCollectingSound;
+	public AudioClip nitroSound;
 	private Vector3 moveDirection = Vector3.zero;
 	public Animator devilRiderAnimator;
 	public float currentTime = 0;
@@ -102,7 +105,9 @@ public class PlayerControl : MonoBehaviour {
 				devilRiderAnimator.SetBool("Dead", true);
 				currentTime = Time.realtimeSinceStartup;
 				PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + CoinNum);
-				
+				audio.Stop();
+				audio.PlayOneShot(crashSound);
+
 				StartCoroutine(timeToGameOver());
 			}
 		}
@@ -114,8 +119,13 @@ public class PlayerControl : MonoBehaviour {
 		}
 
         if (other.name == "Gun") {
+			audio.PlayOneShot(gunCollectingSound);
 		    PlayerPrefs.SetInt("canShoot", 1);
         }
+
+		if (other.name == "Nitro"){
+			audio.PlayOneShot(nitroSound);
+		}
     }
 	
 }
