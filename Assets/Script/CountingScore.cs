@@ -7,9 +7,14 @@ public class CountingScore : MonoBehaviour {
 	int[] isCounted = new int[10];
 	public GameObject aim, DevilRider;
 	public GameObject sung;
+	public PlayerControl playerControl;
+	private double timeToAnimationShoot = 0.1;
+	private double TimeNeedToAnimationShoot = 0.1;
+	private bool isShooting = false;
 	// Use this for initialization
 	void Start () {
         aim.transform.renderer.enabled = false;
+		playerControl = DevilRider.GetComponent<PlayerControl> ();
 	}
 	
 	// Update is called once per frame
@@ -38,7 +43,21 @@ public class CountingScore : MonoBehaviour {
             if (Score > PlayerPrefs.GetInt("highScore"))
                 PlayerPrefs.SetInt("highScore", Score);
 		}
-
+		if (isShooting) 
+		{
+			timeToAnimationShoot -= Time.deltaTime;
+			if (timeToAnimationShoot <= 0)
+			{
+				timeToAnimationShoot = TimeNeedToAnimationShoot;
+				isShooting = false;
+				playerControl.devilRiderAnimator.SetBool("Shoot", false);
+				if (PlayerPrefs.GetInt("canShoot")==0)
+				{
+					sung.renderer.enabled = false;
+					aim.transform.renderer.enabled = false;
+				}
+			}
+		}
 		if (nearestDist > 2 && nearestDist < 25 && PlayerPrefs.GetInt ("canShoot") > 0) {
             Vector3 tmp = transform.GetChild(nearestObj).position;
 			aim.transform.position = new Vector3(DevilRider.transform.position.x, tmp.y, tmp.z - 1);
@@ -52,11 +71,8 @@ public class CountingScore : MonoBehaviour {
                 Score = Score + 5;
                 ScoreLabel.text = ScoreLabel.text.Substring(0, 6) + Score.ToString();
                 PlayerPrefs.SetInt("canShoot", PlayerPrefs.GetInt("canShoot")-1);
-				if (PlayerPrefs.GetInt("canShoot")==0)
-				{
-					sung.renderer.enabled = false;
-                	aim.transform.renderer.enabled = false;
-				}
+				playerControl.devilRiderAnimator.SetBool("Shoot", true);
+				isShooting = true;
             }
         }
 		else 
