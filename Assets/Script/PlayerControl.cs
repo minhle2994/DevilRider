@@ -18,6 +18,7 @@ public class PlayerControl : MonoBehaviour {
 	public float currentTime = 0;
 	public GameObject nitroItem;
 	public NitroControl nitroControl;
+	public GameObject Sung;
 
 	//public bool canShoot = false;
     void Start () {
@@ -27,6 +28,7 @@ public class PlayerControl : MonoBehaviour {
 		devilRiderAnimator.SetBool ("Dead", false);
 		nitroItem = GameObject.Find("Nitro");
 		nitroControl = nitroItem.GetComponent<NitroControl> ();
+		Sung.renderer.enabled = false;
     }
     
 	void Update () {
@@ -67,12 +69,12 @@ public class PlayerControl : MonoBehaviour {
 		if (AccelerometerDirection.x > AccelerometerSensitivity)
 		{
 			// Khi nghiên phone thì cho xe quẹo trái
-			transform.Rotate (new Vector3 (0, 30 * Time.deltaTime, 0), Space.Self);
+			transform.Rotate (new Vector3 (0, 30 * Time.deltaTime, -30 * Time.deltaTime), Space.Self);
 		}
 		else if (AccelerometerDirection.x < -AccelerometerSensitivity)
 		{
 			// Quẹo phải
-			transform.Rotate (new Vector3 (0, -30 * Time.deltaTime, 0), Space.Self);
+			transform.Rotate (new Vector3 (0, -30 * Time.deltaTime, 30 * Time.deltaTime), Space.Self);
 		}
 		else
 		{
@@ -88,11 +90,24 @@ public class PlayerControl : MonoBehaviour {
 		Time.timeScale = 0;
 		while (Time.realtimeSinceStartup - currentTime < 4)
 			yield return null;
-		Application.LoadLevel(2);
+		for (int i=0; i<10; i++){
+			
+			if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Rank" + i.ToString() + "Name")){
+				Debug.Log(PlayerPrefs.GetInt("Rank" + i.ToString() + "Score"));
+				for (int j = 9; j>i; j--){
+					PlayerPrefs.SetString("Rank" + j.ToString() + "Name", PlayerPrefs.GetString("Rank" + (j-1).ToString() + "Name"));
+					PlayerPrefs.SetInt("Rank" + j.ToString() + "Score", PlayerPrefs.GetInt("Rank" + (j-1).ToString() + "Score"));
+				}
+				Application.LoadLevel(5);
+			}
+		}
+		//Application.LoadLevel(3);
 	}
-
-    void OnTriggerEnter (Collider other){
+	
+	void OnTriggerEnter (Collider other){
 		if (other.name == "Car") {
+			other.renderer.enabled = false;
+
 			if(nitroControl.nitroState == true || MovingSpeed > 40f){
 				Vector3 np = other.transform.position;
 				np.x = 0;
@@ -119,8 +134,10 @@ public class PlayerControl : MonoBehaviour {
 		}
 
         if (other.name == "Gun") {
+
 			audio.PlayOneShot(gunCollectingSound);
-		    PlayerPrefs.SetInt("canShoot", 1);
+			PlayerPrefs.SetInt("canShoot", 3);
+		 	Sung.renderer.enabled = true;
         }
 
 		if (other.name == "Nitro"){
