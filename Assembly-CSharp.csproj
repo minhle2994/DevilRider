@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{BFD7FFC3-F6E7-ECF3-B084-2A3FB1DF4216}</ProjectGuid>
+	<ProjectGuid>{EF6297CE-301C-BAA0-BAB6-8E5F3B0D807E}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -52,6 +52,7 @@
      <Compile Include="Assets\Script\GameOver.cs" />
      <Compile Include="Assets\Script\HighScore.cs" />
      <Compile Include="Assets\Script\Intro.cs" />
+     <Compile Include="Assets\Script\LoadLogoStudio.cs" />
      <Compile Include="Assets\Script\NitroControl.cs" />
      <Compile Include="Assets\Script\PlayerControl.cs" />
      <Compile Include="Assets\Script\SlopeLooping.cs" />
