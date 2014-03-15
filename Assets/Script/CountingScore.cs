@@ -5,7 +5,7 @@ public class CountingScore : MonoBehaviour {
 	public GUIText ScoreLabel;
 	public int Score = 0;
 	int[] isCounted = new int[10];
-    public GameObject aim, player;
+	public GameObject aim, DevilRider;
 	// Use this for initialization
 	void Start () {
         aim.transform.renderer.enabled = false;
@@ -28,7 +28,7 @@ public class CountingScore : MonoBehaviour {
 				isCounted[i] = 0;
 			}			 
 
-            float dist = child.position.z - player.transform.position.z;
+			float dist = child.position.z - DevilRider.transform.position.z;
             if (dist > 0 && (nearestDist < 0 || nearestDist > dist)) {
                 nearestObj = i;
                 nearestDist = dist;
@@ -40,10 +40,10 @@ public class CountingScore : MonoBehaviour {
 
 		if (nearestDist > 2 && nearestDist < 15 && PlayerPrefs.GetInt ("canShoot") == 1) {
             Vector3 tmp = transform.GetChild(nearestObj).position;
-            aim.transform.position = new Vector3(player.transform.position.x, tmp.y, tmp.z - 1);
+			aim.transform.position = new Vector3(DevilRider.transform.position.x, tmp.y, tmp.z - 1);
             aim.transform.renderer.enabled = true;
            
-            if (Mathf.Abs(player.transform.position.x - tmp.x) < 0.5) {
+			if (Mathf.Abs(DevilRider.transform.position.x - tmp.x) < 0.5) {
                 Vector3 np = transform.GetChild(nearestObj).position;
                 np.x = 0;
                 np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(58, 60));
