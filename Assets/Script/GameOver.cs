@@ -14,11 +14,11 @@ public class GameOver : MonoBehaviour {
 		GUI.DrawTexture (new Rect(0, 0, Screen.width, Screen.height), gameOverTexture);
 
 		if (GUI.Button (new Rect (6 * Screen.width / 20, 4 * Screen.height / 5, Screen.width / 10, Screen.height / 10), "REPLAY")) {
-			Application.LoadLevel(1);
+			Application.LoadLevel(2);
 		}
 
         if (GUI.Button (new Rect (12 * Screen.width / 20, 4 * Screen.height / 5, Screen.width / 10, Screen.height / 10), "BACK")) {
-            Application.LoadLevel(0);
+            Application.LoadLevel(1);
         }
 	}
 	

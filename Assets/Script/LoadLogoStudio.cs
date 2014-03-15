@@ -12,7 +12,7 @@ public class LoadLogoStudio : MonoBehaviour {
 	// Update is called once per frame
 	void OnGUI() {
 		GUI.DrawTexture (new Rect(0, 0, Screen.width, Screen.height), studioLogo);
-		Application.LoadLevel (0);
+		Application.LoadLevel (1);
 	}
 
 	

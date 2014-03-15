@@ -103,8 +103,13 @@ public class PlayerControl : MonoBehaviour {
     void OnTriggerEnter (Collider other){
 		if (other.name == "Car") {
 			other.renderer.enabled = false;
-			PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + CoinNum);
-			Application.LoadLevel(2);
+			for (int i=0; i<10; i++){
+				if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Rank" + i.ToString() + "Name")){
+
+				};			
+			}
+
+			Application.LoadLevel(3);
 		}
 
 		if (other.name == "Coin") {

@@ -18,15 +18,15 @@ public class Intro : MonoBehaviour {
 		GUI.DrawTexture (new Rect(0, 0, Screen.width, Screen.height), introTexture);
 		
 		if (GUI.Button (new Rect (3*Screen.width / 5, Screen.height / 2, btn_high_score.width/2, btn_high_score.height/2), btn_high_score)) {
-			Application.LoadLevel(3);
+			Application.LoadLevel(4);
 		}
 
 		if (GUI.Button (new Rect (3*Screen.width / 5, Screen.height / 2 - 50, btn_high_score.width/2, btn_high_score.height/2), btn_play)) {
-			Application.LoadLevel(1);
+			Application.LoadLevel(2);
 		}
 
 		if (GUI.Button (new Rect (3*Screen.width / 5, Screen.height / 2 + 50, btn_high_score.width/2, btn_high_score.height/2), btn_credit)) {
-			Application.LoadLevel(3);
+			Application.LoadLevel(4);
 		}
 	}
 

@@ -34,8 +34,8 @@ public class CountingScore : MonoBehaviour {
                 nearestDist = dist;
             }
 
-            if (Score > PlayerPrefs.GetInt("highScore"))
-                PlayerPrefs.SetInt("highScore", Score);
+            PlayerPrefs.SetInt("Score", Score);
+
 		}
 
 		if (nearestDist > 2 && nearestDist < 15 && PlayerPrefs.GetInt ("canShoot") == 1) {
