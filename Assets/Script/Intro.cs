@@ -5,6 +5,7 @@ public class Intro : MonoBehaviour {
 
 	private Texture introTexture;
 	private Texture btn_play, btn_high_score, btn_credit;
+	//public AudioClip backgroundMusic;
 
 	// Use this for initialization
 	void Start () {
@@ -12,6 +13,7 @@ public class Intro : MonoBehaviour {
 		btn_play = Resources.Load ("btn_play") as Texture;
 		btn_high_score = Resources.Load ("btn_high_score") as Texture;
 		btn_credit = Resources.Load ("btn_credit") as Texture;
+		//audio.PlayOneShot (backgroundMusic);
 	}
 	
 	void OnGUI(){
@@ -32,6 +34,6 @@ public class Intro : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 }
