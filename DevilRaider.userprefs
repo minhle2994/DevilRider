@@ -1,11 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\PlayerControl.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Credit.cs">
     <Files>
-      <File FileName="Assets\Script\HighScore.cs" Line="24" Column="10" />
-      <File FileName="Assets\Script\PlayerControl.cs" Line="101" Column="6" />
-      <File FileName="Assets\Script\CountingScore.cs" Line="12" Column="3" />
-      <File FileName="Assets\Script\EnterName.cs" Line="12" Column="15" />
+      <File FileName="Assets\Script\HighScore.cs" Line="7" Column="34" />
+      <File FileName="Assets\Script\PlayerControl.cs" Line="60" Column="72" />
+      <File FileName="Assets\Script\CountingScore.cs" Line="35" Column="65" />
+      <File FileName="Assets\Script\EnterName.cs" Line="15" Column="95" />
+      <File FileName="Assets\Script\CarControl.cs" Line="18" Column="42" />
+      <File FileName="Assets\Script\NitroControl.cs" Line="8" Column="27" />
+      <File FileName="Assets\Script\Credit.cs" Line="11" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
