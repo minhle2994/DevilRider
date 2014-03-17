@@ -10,14 +10,20 @@ public class PlayerControl : MonoBehaviour {
 	public GUIText CoinLabel;
 	public int CoinNum = 0;
 	public AudioClip collectCoinSound;
+	public AudioClip crashSound;
+	public AudioClip gunCollectingSound;
+	public AudioClip nitroSound;
 	private Vector3 moveDirection = Vector3.zero;
 	public Animator devilRiderAnimator;
 	public float currentTime = 0;
 	public GameObject nitroItem;
 	public NitroControl nitroControl;
 	public GameObject Sung;
-
+	public GUILayer pauseLayer;
 	//public bool canShoot = false;
+	public bool flag = false;
+	private bool newHighScore = false;
+
     void Start () {
 		Time.timeScale = 1;
         PlayerPrefs.SetInt("canShoot", 0);
@@ -27,7 +33,9 @@ public class PlayerControl : MonoBehaviour {
 		nitroControl = nitroItem.GetComponent<NitroControl> ();
 		Sung.renderer.enabled = false;
 		PlayerPrefs.SetInt ("Score", 0);
-    }
+		flag = false;
+		newHighScore = false;
+  }
     
 	void Update () {
 	}
@@ -83,7 +91,7 @@ public class PlayerControl : MonoBehaviour {
 	
 
 	IEnumerator timeToGameOver(){
-		while (Time.realtimeSinceStartup - currentTime < 0.4)
+		while (Time.realtimeSinceStartup - currentTime < 1)
 			yield return null;
 		Time.timeScale = 0;
 		while (Time.realtimeSinceStartup - currentTime < 2)
@@ -100,11 +108,13 @@ public class PlayerControl : MonoBehaviour {
 				PlayerPrefs.SetInt("Rank", i);
 				Application.LoadLevel(5);
 				//Debug.Log(i);
+				newHighScore = true;
 				break;
 			}
 		}
 
-		//Application.LoadLevel(3);
+		if (newHighScore == false) 
+			Application.LoadLevel(3);
 	}
 	
 	void OnTriggerEnter (Collider other){
@@ -119,13 +129,19 @@ public class PlayerControl : MonoBehaviour {
 				CoinNum += 10;
 				CoinLabel.text = CoinLabel.text.Substring(0, 5) + CoinNum.ToString();
 			}else{
-				other.renderer.enabled = false;
+				Vector3 np = other.transform.position;
+				np.x = 0;
+				np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));
+				other.transform.position = np;
+				Time.timeScale = 1f;
 				devilRiderAnimator.SetBool("Dead", true);
 				currentTime = Time.realtimeSinceStartup;
 				PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + CoinNum);
-				
-				StartCoroutine(timeToGameOver());
+				audio.Stop();
+				audio.PlayOneShot(crashSound);
 
+				StartCoroutine(timeToGameOver());
+				//Application.LoadLevel(3);
 			}
 		}
 
@@ -136,10 +152,38 @@ public class PlayerControl : MonoBehaviour {
 		}
 
         if (other.name == "Gun") {
+
+			audio.PlayOneShot(gunCollectingSound);
 			PlayerPrefs.SetInt("canShoot", 3);
 		 	Sung.renderer.enabled = true;
         }
+
+		if (other.name == "Nitro"){
+			audio.PlayOneShot(nitroSound);
+		}
     }
-	
+
+	void OnGUI(){
+		if (GUI.Button (new Rect (Screen.width - 35, 10, 30, 30), "=")) {
+			Time.timeScale = 0;
+			flag = true;
+
+		}
+		if (flag) {
+			GUI.Box(new Rect (Screen.width/2-50, Screen.height/2-30, 100, 60),"");
+			if (GUI.Button (new Rect (Screen.width/2+5, Screen.height/2-15, 30, 30), ">")) 
+			{
+				Time.timeScale = 1;
+				flag = false;
+			}
+			if (GUI.Button (new Rect (Screen.width/2-35, Screen.height/2-15, 30, 30), "<")) 
+			{
+				Time.timeScale = 1;
+				flag = false;
+				Application.LoadLevel(1);
+			}
+		}
+
+	}
 }
  

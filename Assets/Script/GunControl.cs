@@ -30,7 +30,6 @@ public class GunControl : MonoBehaviour {
 			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));
 			transform.position = np;
 			numberOfBullet = 3;
-			playerControl.devilRiderAnimator.SetBool("An_sung", true);
 		}
 	}
 }

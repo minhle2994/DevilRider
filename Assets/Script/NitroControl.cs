@@ -8,6 +8,7 @@ public class NitroControl : MonoBehaviour {
 	public GameObject player;
 	public PlayerControl playerControl;
 	float currentSpeed;
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find ("DevilRider");
@@ -78,7 +79,6 @@ public class NitroControl : MonoBehaviour {
 			transform.position = np;
 			nitro += 20;
 			if (nitro > 100) nitro = 100;
-			
 		}
 	}
 }
