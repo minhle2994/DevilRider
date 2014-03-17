@@ -85,7 +85,7 @@ public class PlayerControl : MonoBehaviour {
 	
 
 	IEnumerator timeToGameOver(){
-		while (Time.realtimeSinceStartup - currentTime < 0.4)
+		while (Time.realtimeSinceStartup - currentTime < 1)
 			yield return null;
 		Time.timeScale = 0;
 		while (Time.realtimeSinceStartup - currentTime < 4)
@@ -116,7 +116,11 @@ public class PlayerControl : MonoBehaviour {
 				CoinNum += 10;
 				CoinLabel.text = CoinLabel.text.Substring(0, 5) + CoinNum.ToString();
 			}else{
-				other.renderer.enabled = false;
+				Vector3 np = other.transform.position;
+				np.x = 0;
+				np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));
+				other.transform.position = np;
+				Time.timeScale = 1f;
 				devilRiderAnimator.SetBool("Dead", true);
 				currentTime = Time.realtimeSinceStartup;
 				PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + CoinNum);
