@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class CarControl : MonoBehaviour {
-
+	private Vector3 moveDirection = Vector3.zero;
 	// Use this for initialization
 	void Start () {	
 	}
@@ -10,6 +10,9 @@ public class CarControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.Translate(new Vector3(0, 0, 12 * Time.deltaTime));
+//		moveDirection = transform.TransformDirection (new Vector3 (0, 0, 12));
+//		this.GetComponent<CharacterController>().Move (moveDirection * Time.deltaTime);
+
 
 		if (Camera.main.transform.position.z >= (this.transform.position.z + 20)) {
 		    Vector3 np = this.transform.position;
