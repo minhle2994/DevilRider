@@ -16,9 +16,9 @@ public class NitroControl : MonoBehaviour {
 	}
 	
 	void OnGUI(){
-		GUI.Box (new Rect (10, 50, 100, 20), "nitro");
+		GUI.Box (new Rect (Screen.width/2 - 100, 30, 200, 40), "nitro");
 		if (nitro > 0)
-			GUI.Button (new Rect (10, 50, nitro, 20), "");
+			GUI.Button (new Rect (Screen.width/2 - 100, 30, nitro*2, 40), "");
 	}
 	
 	// Update is called once per frame
@@ -32,7 +32,7 @@ public class NitroControl : MonoBehaviour {
 		if (Camera.main.transform.position.z >= (this.transform.position.z + 20)) {
 			Vector3 np = this.transform.position;
 			np.x = 0;
-			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(58, 60));
+			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(80, 90));
 			this.transform.position = np;
 			if (this.renderer.enabled == false)
 				this.renderer.enabled = true;

@@ -33,7 +33,7 @@ public class CarControl : MonoBehaviour {
         if (other.name == "Gun") {
             Vector3 np = other.transform.position;
             np.x = 0;
-            np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(58, 60));
+            np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(80, 90));
             other.transform.position = np;
         }
 		if (other.name == "Nitro") {
