@@ -11,6 +11,9 @@ public class CountingScore : MonoBehaviour {
 	private double timeToAnimationShoot = 0.1;
 	private double TimeNeedToAnimationShoot = 0.1;
 	private bool isShooting = false;
+	public ParticleSystem bomb;
+	public AudioClip shootSound;
+
 	// Use this for initialization
 	void Start () {
         aim.transform.renderer.enabled = false;
@@ -69,6 +72,9 @@ public class CountingScore : MonoBehaviour {
                 Vector3 np = transform.GetChild(nearestObj).position;
                 np.x = 0;
                 np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(58, 60));
+				bomb.transform.position = transform.GetChild(nearestObj).position;
+				audio.PlayOneShot(shootSound);
+				bomb.Play ();
                 transform.GetChild(nearestObj).position = np;
                 Score = Score + 5;
                 ScoreLabel.text = ScoreLabel.text.Substring(0, 6) + Score.ToString();
