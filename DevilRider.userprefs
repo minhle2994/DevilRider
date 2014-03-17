@@ -1,10 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\CountingScore.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Intro.cs">
     <Files>
-      <File FileName="Assets\Script\PlayerControl.cs" Line="65" Column="3" />
-      <File FileName="Assets\Script\GunControl.cs" Line="17" Column="19" />
-      <File FileName="Assets\Script\CountingScore.cs" Line="58" Column="6" />
+      <File FileName="Assets\Script\CountingScore.cs" Line="63" Column="31" />
+      <File FileName="Assets\Script\LoadLogoStudio.cs" Line="15" Column="20" />
+      <File FileName="Assets\Script\NitroControl.cs" Line="26" Column="44" />
+      <File FileName="Assets\Script\EnterName.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Intro.cs" Line="16" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
