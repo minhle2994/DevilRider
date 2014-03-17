@@ -26,7 +26,7 @@ public class Intro : MonoBehaviour {
 		}
 
 		if (GUI.Button (new Rect (3*Screen.width / 5, Screen.height / 2 + 50, btn_high_score.width/2, btn_high_score.height/2), btn_credit)) {
-			Application.LoadLevel(4);
+			Application.LoadLevel(6);
 		}
 	}
 

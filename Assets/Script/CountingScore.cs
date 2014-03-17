@@ -21,19 +21,20 @@ public class CountingScore : MonoBehaviour {
 		for (int i=0; i < childNum; i++){
 			Transform child = transform.GetChild(i);
 			if (child.position.z < DevilRider.transform.position.z && isCounted[i] == 0){
+				Debug.Log("past " + i + "at " + child.position.z);
 				Score ++;
 				isCounted[i] = 1;
-				Debug.Log(Score);
 				ScoreLabel.text = ScoreLabel.text.Substring(0, 6) + Score.ToString();
 			}
-			if (child.position.z > DevilRider.transform.position.z && isCounted[i] == 1){
+			if (child.position.z - DevilRider.transform.position.z > 5 && isCounted[i] == 1){
+				Debug.Log("change position " + i + " to " + child.position.z);
+				Debug.Log("player position " + DevilRider.transform.position.z);
 				isCounted[i] = 0;
 			}			 
 			float dist = child.position.z - DevilRider.transform.position.z;
             if (dist > 0 && (nearestDist < 0 || nearestDist > dist)) {
                 nearestObj = i;
                 nearestDist = dist;
-				Debug.Log(DevilRider.transform.position.z);
             }
 		}
 		PlayerPrefs.SetInt("Score", Score);
