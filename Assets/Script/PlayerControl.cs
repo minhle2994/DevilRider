@@ -22,6 +22,8 @@ public class PlayerControl : MonoBehaviour {
 	public GUILayer pauseLayer;
 	//public bool canShoot = false;
 	public bool flag = false;
+	private bool newHighScore = false;
+
     void Start () {
 		Time.timeScale = 1;
         PlayerPrefs.SetInt("canShoot", 0);
@@ -30,7 +32,9 @@ public class PlayerControl : MonoBehaviour {
 		nitroItem = GameObject.Find("Nitro");
 		nitroControl = nitroItem.GetComponent<NitroControl> ();
 		Sung.renderer.enabled = false;
+		PlayerPrefs.SetInt ("Score", 0);
 		flag = false;
+		newHighScore = false;
   }
     
 	void Update () {
@@ -90,20 +94,27 @@ public class PlayerControl : MonoBehaviour {
 		while (Time.realtimeSinceStartup - currentTime < 1.8)
 			yield return null;
 		Time.timeScale = 0;
-		while (Time.realtimeSinceStartup - currentTime < 4)
+		while (Time.realtimeSinceStartup - currentTime < 2)
 			yield return null;
 		for (int i=0; i<10; i++){
 			
-			if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Rank" + i.ToString() + "Name")){
-				Debug.Log(PlayerPrefs.GetInt("Rank" + i.ToString() + "Score"));
+			if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Rank" + i.ToString() + "Score")){
+				//Debug.Log(PlayerPrefs.GetInt("Rank" + i.ToString() + "Score"));
+				//Debug.Log(PlayerPrefs.GetInt("Score"));
 				for (int j = 9; j>i; j--){
 					PlayerPrefs.SetString("Rank" + j.ToString() + "Name", PlayerPrefs.GetString("Rank" + (j-1).ToString() + "Name"));
 					PlayerPrefs.SetInt("Rank" + j.ToString() + "Score", PlayerPrefs.GetInt("Rank" + (j-1).ToString() + "Score"));
 				}
+				PlayerPrefs.SetInt("Rank", i);
 				Application.LoadLevel(5);
+				//Debug.Log(i);
+				newHighScore = true;
+				break;
 			}
 		}
-		//Application.LoadLevel(3);
+
+		if (newHighScore == false) 
+			Application.LoadLevel(3);
 	}
 	
 	void OnTriggerEnter (Collider other){
@@ -131,6 +142,7 @@ public class PlayerControl : MonoBehaviour {
 				audio.PlayOneShot(crashSound);
 
 				StartCoroutine(timeToGameOver());
+				//Application.LoadLevel(3);
 			}
 		}
 

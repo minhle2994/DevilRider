@@ -47,7 +47,7 @@ public class NitroControl : MonoBehaviour {
 			else nitroActionOff();
 		} 
 		else {
-			if (Input.GetKey(KeyCode.UpArrow) && nitro > 0){
+			if ((Input.GetKey(KeyCode.UpArrow)) && (nitro > 0)){
 				nitroActionOn();
 			}
 			else nitroActionOff();
