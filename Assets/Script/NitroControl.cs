@@ -16,9 +16,9 @@ public class NitroControl : MonoBehaviour {
 	}
 	
 	void OnGUI(){
-		GUI.Box (new Rect (10, 50, 100, 20), "nitro");
+		GUI.Box (new Rect (Screen.width/2 - 100, 30, 200, 40), "nitro");
 		if (nitro > 0)
-			GUI.Button (new Rect (10, 50, nitro, 20), "");
+			GUI.Button (new Rect (Screen.width/2 - 100, 30, nitro*2, 40), "");
 	}
 	
 	// Update is called once per frame
