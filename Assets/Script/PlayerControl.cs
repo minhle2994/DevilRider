@@ -16,8 +16,9 @@ public class PlayerControl : MonoBehaviour {
 	public GameObject nitroItem;
 	public NitroControl nitroControl;
 	public GameObject Sung;
-
+	public GUILayer pauseLayer;
 	//public bool canShoot = false;
+	public bool flag = false;
     void Start () {
 		Time.timeScale = 1;
         PlayerPrefs.SetInt("canShoot", 0);
@@ -26,7 +27,8 @@ public class PlayerControl : MonoBehaviour {
 		nitroItem = GameObject.Find("Nitro");
 		nitroControl = nitroItem.GetComponent<NitroControl> ();
 		Sung.renderer.enabled = false;
-    }
+		flag = false;
+  }
     
 	void Update () {
 	}
@@ -133,6 +135,28 @@ public class PlayerControl : MonoBehaviour {
 		 	Sung.renderer.enabled = true;
         }
     }
-	
+
+	void OnGUI(){
+		if (GUI.Button (new Rect (Screen.width - 35, 10, 30, 30), "=")) {
+			Time.timeScale = 0;
+			flag = true;
+
+		}
+		if (flag) {
+			GUI.Box(new Rect (Screen.width/2-50, Screen.height/2-30, 100, 60),"");
+			if (GUI.Button (new Rect (Screen.width/2+5, Screen.height/2-15, 30, 30), ">")) 
+			{
+				Time.timeScale = 1;
+				flag = false;
+			}
+			if (GUI.Button (new Rect (Screen.width/2-35, Screen.height/2-15, 30, 30), "<")) 
+			{
+				Time.timeScale = 1;
+				flag = false;
+				Application.LoadLevel(1);
+			}
+		}
+
+	}
 }
  
