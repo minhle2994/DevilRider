@@ -73,20 +73,24 @@ public class PlayerControl : MonoBehaviour {
 		turnRight = transform.TransformDirection (new Vector3 (-5, 0, 0));
 
 		this.GetComponent<CharacterController>().Move (moveDirection * Time.deltaTime);
-		
+		Debug.Log (transform.eulerAngles.z);
 		// Camera cũng phải chạy theo, giữ 1 khoảng cách nhất định với xe
 		Camera.main.transform.position = new Vector3(transform.position.x , transform.position.y + 5, transform.position.z - 8);
 		Nitro.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
 		if (AccelerometerDirection.x > AccelerometerSensitivity)
 		{
-			// Khi nghiên phone thì cho xe quẹo trái
-			transform.Rotate (new Vector3 (0, 7 * Time.deltaTime, -30 * Time.deltaTime), Space.Self);
+			if (transform.eulerAngles.z > 315 || Mathf.Abs(transform.eulerAngles.z) < 1
+			    || (transform.eulerAngles.z >= 0 && transform.eulerAngles.z <= 45)){
+				transform.Rotate (new Vector3 (0, 7 * Time.deltaTime, -30 * Time.deltaTime), Space.Self);
+			}
 			this.GetComponent<CharacterController>().Move (turnLeft * Time.deltaTime);
 		}
 		else if (AccelerometerDirection.x < -AccelerometerSensitivity)
 		{
-			// Quẹo phải
-			transform.Rotate (new Vector3 (0, -7 * Time.deltaTime, 30 * Time.deltaTime), Space.Self);
+			if (transform.eulerAngles.z < 45 || Mathf.Abs(transform.eulerAngles.z) < 1
+			    || (transform.eulerAngles.z <= 360 && transform.eulerAngles.z >= 315)){
+				transform.Rotate (new Vector3 (0, -7 * Time.deltaTime, 30 * Time.deltaTime), Space.Self);
+			}
 			this.GetComponent<CharacterController>().Move (turnRight * Time.deltaTime);
 		}
 		else
