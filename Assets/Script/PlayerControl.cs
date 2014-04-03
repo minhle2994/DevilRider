@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
@@ -7,7 +6,7 @@ public class PlayerControl : MonoBehaviour {
 	public float jumpSpeed = 10.0f;
 	public float gravity = 20.0f;
     private Vector3 AccelerometerDirection;             // Trục cảm ứng nghiên
-    public float AccelerometerSensitivity = 0.05f;      // Độ nhạy cảm ứng nghiên
+    public float AccelerometerSensitivity = 0.5f;      // Độ nhạy cảm ứng nghiên
 	public GUIText CoinLabel;
 	public int CoinNum = 0;
 	public AudioClip collectCoinSound;
@@ -24,7 +23,8 @@ public class PlayerControl : MonoBehaviour {
 	//public bool canShoot = false;
 	public bool flag = false;
 	private bool newHighScore = false;
-	public GameObject Nitro;
+	public bool nitroState;
+	public GameObject nitroTorch;
 	public Vector3 turnLeft, turnRight;
 
     void Start () {
@@ -38,6 +38,9 @@ public class PlayerControl : MonoBehaviour {
 		PlayerPrefs.SetInt ("Score", 0);
 		flag = false;
 		newHighScore = false;
+		nitroState = false;
+		turnLeft = transform.TransformDirection (new Vector3 (15, 0, 0));
+		turnRight = transform.TransformDirection (new Vector3 (-15, 0, 0));
   }
     
 	void Update () {
@@ -54,50 +57,54 @@ public class PlayerControl : MonoBehaviour {
 				if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer) {
 						AccelerometerDirection = Input.acceleration;   
 				} else {
-						if (Input.GetKeyUp (KeyCode.LeftArrow) || Input.GetKeyUp (KeyCode.RightArrow)) {
-								AccelerometerDirection.x = AccelerometerSensitivity;
-						} else
-							if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-								AccelerometerDirection.x = AccelerometerSensitivity - 1;
-							} else
-								if (Input.GetKeyDown (KeyCode.RightArrow)) {
-										AccelerometerDirection.x = -AccelerometerSensitivity + 1;
-								} 
-
+						if (Input.GetKey (KeyCode.LeftArrow)) {
+								AccelerometerDirection.x -=  0.01f;
+						}else 
+							if (Input.GetKey (KeyCode.RightArrow)) {
+									AccelerometerDirection.x +=  0.01f;
+							} 
+								else {
+										AccelerometerDirection.x = 0;
+								}
 				}
 		}
 
+
+	
 	void movementManagement(){
-		Debug.Log(transform.eulerAngles.z.ToString());
 		// Di chuyển xe thẳng hướng phía trước
 		//transform.Translate(new Vector3(0, 0, MovingSpeed * Time.deltaTime));
 		moveDirection = transform.TransformDirection (new Vector3 (0, 0, MovingSpeed));
-		turnLeft = transform.TransformDirection (new Vector3 (0.5f, 0, 0));
-		turnRight = transform.TransformDirection (new Vector3 (-0.5f, 0, 0));
 
+		Debug.Log (Input.acceleration.x);
 		this.GetComponent<CharacterController>().Move (moveDirection * Time.deltaTime);
-		
 		// Camera cũng phải chạy theo, giữ 1 khoảng cách nhất định với xe
 		Camera.main.transform.position = new Vector3(transform.position.x , transform.position.y + 5, transform.position.z - 8);
-		Nitro.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
-
+		nitroTorch.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+		if (nitroState == true)
+						nitroTorch.renderer.enabled = true;
+		if(nitroState == false)
+						nitroTorch.renderer.enabled = false;
+		if((transform.eulerAngles.z >= 315) || (transform.eulerAngles.z <= 45))
+			if((this.transform.position.x > -4.5f) && (this.transform.position.x < 4.5f))
+				transform.eulerAngles = new Vector3 (0, 10* AccelerometerDirection.x, -40 * AccelerometerDirection.x);
+		else transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, 0), 7 * Time.deltaTime);
 		if (AccelerometerDirection.x > AccelerometerSensitivity)
-		{	Debug.Log("right" + transform.eulerAngles.z.ToString());
-			// Khi nghiên phone thì cho xe quẹo phải
-			transform.Rotate (new Vector3 (0, 7 * Time.deltaTime, -30 * Time.deltaTime), Space.Self);	
-			this.GetComponent<CharacterController>().Move (turnLeft* AccelerometerDirection.x* Time.deltaTime*(4+ Time.deltaTime));
+		{
+			if(this.transform.position.x < 4.5f)
+				this.transform.Translate(new Vector3(13* AccelerometerDirection.x* Time.deltaTime, 0, 0),Space.World);
 		}
 		else if (AccelerometerDirection.x < -AccelerometerSensitivity)
-		{	Debug.Log("left" + transform.eulerAngles.z.ToString());
-			// Quẹo trái
-
-				transform.Rotate (new Vector3 (0, -7 * Time.deltaTime, 30 * Time.deltaTime), Space.Self);
-			this.GetComponent<CharacterController>().Move (turnRight* (-AccelerometerDirection.x)* Time.deltaTime*(4+ Time.deltaTime));
+		{	
+			if(this.transform.position.x > -4.5f)
+				this.transform.Translate(new Vector3(13* AccelerometerDirection.x* Time.deltaTime, 0, 0),Space.World);
 		}
-		else transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, AccelerometerDirection.x), 7 * Time.deltaTime);
-		
+		else
+		{
+			// Mặc định thì xoay xe hướng về phía trước nó sẽ chạy thẳng
+			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, 0), 7 * Time.deltaTime);
+		}
 	}
-	
 
 	IEnumerator timeToGameOver(){
 		while (Time.realtimeSinceStartup - currentTime < 1.8)
