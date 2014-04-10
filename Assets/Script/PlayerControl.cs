@@ -28,7 +28,7 @@ public class PlayerControl : MonoBehaviour {
 	public GameObject nitroTorch;
 	public Vector3 turnLeft, turnRight;
 	private float angle;
-
+	public float baseSpeed = 20.0f;
 
     void Start () {
 		Time.timeScale = 1;
@@ -49,7 +49,11 @@ public class PlayerControl : MonoBehaviour {
     
 	void Update () {
 		detectPlatform ();
-		if(MovingSpeed < 35) MovingSpeed += Time.deltaTime / 6;
+		if (baseSpeed < 40) {
+			baseSpeed += Time.deltaTime/10;
+			if (MovingSpeed < baseSpeed) 
+				MovingSpeed = baseSpeed;
+		}
 		movementManagement ();
 	}
 
