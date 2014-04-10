@@ -4,7 +4,7 @@ using System.Collections;
 public class NitroControl : MonoBehaviour {
 	float nitro = 0;
 	public bool nitroState = false;
-	private float maxSpeed = 50f;
+	private float maxSpeed = 60f;
 	public GameObject player;
 	public PlayerControl playerControl;
 	float currentSpeed;
@@ -53,7 +53,7 @@ public class NitroControl : MonoBehaviour {
 			else nitroActionOff();
 		}
 		
-		if (nitro == 0 && playerControl.MovingSpeed > 20)
+		if (nitro == 0 && playerControl.MovingSpeed > playerControl.baseSpeed)
 			playerControl.MovingSpeed -= 0.3f;
 	}
 
@@ -68,7 +68,7 @@ public class NitroControl : MonoBehaviour {
 	void nitroActionOff(){
 		nitroState = false;
 		playerControl.devilRiderAnimator.SetBool ("Nitro", false);
-		if (playerControl.MovingSpeed > 20)
+		if (playerControl.MovingSpeed > playerControl.baseSpeed)
 			playerControl.MovingSpeed -= 0.3f;
 		playerControl.nitroState = false;
 	}
