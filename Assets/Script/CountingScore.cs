@@ -58,7 +58,7 @@ public class CountingScore : MonoBehaviour {
 			}
 		}
 		PlayerPrefs.SetInt("Score", Score);
-		//Debug.Log (nearestDist);
+
 
 		if (nearestDist > 2 && nearestDist < 25 && PlayerPrefs.GetInt ("canShoot") > 0) {
             Vector3 tmp = transform.GetChild(nearestObj).position;

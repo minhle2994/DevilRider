@@ -62,6 +62,7 @@
      <Compile Include="Assets\Script\StreetLooping.cs" />
      <Compile Include="Assets\Script\TreeLooping.cs" />
      <Compile Include="Assets\Script\WallLooping.cs" />
+     <Compile Include="Assets\Script\ghostRiderControl.cs" />
      <Compile Include="Assets\Script\hellmountainControl.cs" />
      <Compile Include="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" />
   </ItemGroup>

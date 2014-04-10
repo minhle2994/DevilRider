@@ -23,12 +23,6 @@ public class CarControl : MonoBehaviour {
 	}
 
     void OnTriggerEnter (Collider other){
-        if (other.name == "Coin") {
-            Vector3 np = other.transform.position;
-            np.x = 0;
-            np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(58, 60));
-            other.transform.position = np;
-        }
         
         if (other.name == "Gun") {
             Vector3 np = other.transform.position;

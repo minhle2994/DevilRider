@@ -132,15 +132,13 @@ public class PlayerControl : MonoBehaviour {
 		for (int i=0; i<10; i++){
 			
 			if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Rank" + i.ToString() + "Score")){
-				//Debug.Log(PlayerPrefs.GetInt("Rank" + i.ToString() + "Score"));
-				//Debug.Log(PlayerPrefs.GetInt("Score"));
 				for (int j = 9; j>i; j--){
 					PlayerPrefs.SetString("Rank" + j.ToString() + "Name", PlayerPrefs.GetString("Rank" + (j-1).ToString() + "Name"));
 					PlayerPrefs.SetInt("Rank" + j.ToString() + "Score", PlayerPrefs.GetInt("Rank" + (j-1).ToString() + "Score"));
 				}
 				PlayerPrefs.SetInt("Rank", i);
 				Application.LoadLevel(5);
-				//Debug.Log(i);
+
 				newHighScore = true;
 				break;
 			}
