@@ -7,6 +7,7 @@ public class PlayerControl : MonoBehaviour {
 	public float gravity = 20.0f;
     private Vector3 AccelerometerDirection;             // Trục cảm ứng nghiên
     public float AccelerometerSensitivity = 0.1f;      // Độ nhạy cảm ứng nghiên
+
 	public GUIText CoinLabel;
 	public int CoinNum = 0;
 	public AudioClip collectCoinSound;
@@ -23,7 +24,8 @@ public class PlayerControl : MonoBehaviour {
 	//public bool canShoot = false;
 	public bool flag = false;
 	private bool newHighScore = false;
-	public GameObject Nitro;
+	public bool nitroState;
+	public GameObject nitroTorch;
 	public Vector3 turnLeft, turnRight;
 	private float angle;
 
@@ -41,6 +43,8 @@ public class PlayerControl : MonoBehaviour {
 		newHighScore = false;
 		turnRight = transform.TransformDirection (new Vector3 (10, 0, 0));
 		turnLeft = transform.TransformDirection (new Vector3 (-10, 0, 0));
+		nitroState = false;
+
   }
     
 	void Update () {
@@ -71,6 +75,8 @@ public class PlayerControl : MonoBehaviour {
 		AccelerometerDirection.x = Mathf.Min (AccelerometerDirection.x, 0.7f);
 	}
 
+
+	
 	void movementManagement(){
 		// Di chuyển xe thẳng hướng phía trước
 		//transform.Translate(new Vector3(0, 0, MovingSpeed * Time.deltaTime));
@@ -81,7 +87,7 @@ public class PlayerControl : MonoBehaviour {
 		this.GetComponent<CharacterController>().Move (moveDirection * Time.deltaTime);
 		// Camera cũng phải chạy theo, giữ 1 khoảng cách nhất định với xe
 		Camera.main.transform.position = new Vector3(transform.position.x , transform.position.y + 5, transform.position.z - 8);
-		Nitro.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+		nitroTorch.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
 
 		if ( AccelerometerDirection.x > AccelerometerSensitivity)
 		{
@@ -117,6 +123,7 @@ public class PlayerControl : MonoBehaviour {
 					transform.Rotate (new Vector3 (0, -0 * Time.deltaTime, 100 * Time.deltaTime -AccelerometerDirection.x * 2.0f), Space.Self);
 			}
 			this.GetComponent<CharacterController>().Move (turnLeft * Time.deltaTime * -AccelerometerDirection.x * 2.0f);
+
 		}
 		else
 		{
@@ -124,7 +131,6 @@ public class PlayerControl : MonoBehaviour {
 			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, 0), 7 * Time.deltaTime);
 		}
 	}
-	
 
 	IEnumerator timeToGameOver(){
 		while (Time.realtimeSinceStartup - currentTime < 1.8)

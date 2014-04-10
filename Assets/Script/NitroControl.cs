@@ -60,8 +60,9 @@ public class NitroControl : MonoBehaviour {
 	void nitroActionOn(){
 		nitroState = true;
 		playerControl.MovingSpeed = Mathf.Min(currentSpeed+0.7f, maxSpeed);
-		nitro -= 0.5f;
+		nitro -= 0.05f;
 		playerControl.devilRiderAnimator.SetBool ("Nitro", true);
+		playerControl.nitroState = true;
 	}
 
 	void nitroActionOff(){
@@ -69,6 +70,7 @@ public class NitroControl : MonoBehaviour {
 		playerControl.devilRiderAnimator.SetBool ("Nitro", false);
 		if (playerControl.MovingSpeed > 20)
 			playerControl.MovingSpeed -= 0.3f;
+		playerControl.nitroState = false;
 	}
 
 	void OnTriggerEnter (Collider other){
