@@ -6,10 +6,14 @@ public class PlayerControl : MonoBehaviour {
 	public float jumpSpeed = 10.0f;
 	public float gravity = 20.0f;
     private Vector3 AccelerometerDirection;             // Trục cảm ứng nghiên
-    public float AccelerometerSensitivity = 0.05f;      // Độ nhạy cảm ứng nghiên
+    public float AccelerometerSensitivity = 0.1f;      // Độ nhạy cảm ứng nghiên
+
 	public GUIText CoinLabel;
 	public int CoinNum = 0;
 	public AudioClip collectCoinSound;
+	public AudioClip crashSound;
+	public AudioClip gunCollectingSound;
+	public AudioClip nitroSound;
 	private Vector3 moveDirection = Vector3.zero;
 	public Animator devilRiderAnimator;
 	public float currentTime = 0;
@@ -19,15 +23,28 @@ public class PlayerControl : MonoBehaviour {
 	public GUILayer pauseLayer;
 	//public bool canShoot = false;
 	public bool flag = false;
+	private bool newHighScore = false;
+	public bool nitroState;
+	public GameObject nitroTorch;
+	public Vector3 turnLeft, turnRight;
+	private float angle;
+
+
     void Start () {
 		Time.timeScale = 1;
         PlayerPrefs.SetInt("canShoot", 0);
 		devilRiderAnimator = GetComponent<Animator> ();
-		devilRiderAnimator.SetBool ("Dead", false);
+//		devilRiderAnimator.SetBool ("Dead", false);
 		nitroItem = GameObject.Find("Nitro");
 		nitroControl = nitroItem.GetComponent<NitroControl> ();
 		Sung.renderer.enabled = false;
+		PlayerPrefs.SetInt ("Score", 0);
 		flag = false;
+		newHighScore = false;
+		turnRight = transform.TransformDirection (new Vector3 (10, 0, 0));
+		turnLeft = transform.TransformDirection (new Vector3 (-10, 0, 0));
+		nitroState = false;
+
   }
     
 	void Update () {
@@ -41,39 +58,72 @@ public class PlayerControl : MonoBehaviour {
 
 	// Detect the platform which is running
 	void detectPlatform(){
-		if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer) {
-						AccelerometerDirection = Input.acceleration;   
-		} else {
-				if (Input.GetKey (KeyCode.LeftArrow)) {
-						AccelerometerDirection.x = AccelerometerSensitivity - 1;
-				}
-				if (Input.GetKey (KeyCode.RightArrow)) {
-						AccelerometerDirection.x = -AccelerometerSensitivity + 1;
-				}
-				if (Input.GetKeyUp (KeyCode.LeftArrow) || Input.GetKeyUp (KeyCode.RightArrow)) {
-						AccelerometerDirection.x = 0.0f;
-				}
-		}
+//		if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer) {
+//						AccelerometerDirection = Input.acceleration;   
+//		} else {
+//				if (Input.GetKey (KeyCode.LeftArrow)) {
+//						AccelerometerDirection.x = AccelerometerSensitivity - 1;
+//				}
+//				else if (Input.GetKey (KeyCode.RightArrow)) {
+//						AccelerometerDirection.x = -AccelerometerSensitivity + 1;
+//				}
+//				else {
+//						AccelerometerDirection.x = 0.0f;
+//				}
+//		}
+		AccelerometerDirection = Input.acceleration;   
+		AccelerometerDirection.x = Mathf.Min (AccelerometerDirection.x, 0.7f);
 	}
 
+
+	
 	void movementManagement(){
 		// Di chuyển xe thẳng hướng phía trước
 		//transform.Translate(new Vector3(0, 0, MovingSpeed * Time.deltaTime));
 		moveDirection = transform.TransformDirection (new Vector3 (0, 0, MovingSpeed));
+
+		//Debug.Log (transform.eulerAngles.z);
+		//Debug.Log (AccelerometerDirection.x);
 		this.GetComponent<CharacterController>().Move (moveDirection * Time.deltaTime);
-		
 		// Camera cũng phải chạy theo, giữ 1 khoảng cách nhất định với xe
-		Camera.main.transform.position = new Vector3(0, transform.position.y + 7, transform.position.z - 10);
-		
-		if (AccelerometerDirection.x > AccelerometerSensitivity)
+		Camera.main.transform.position = new Vector3(transform.position.x , transform.position.y + 5, transform.position.z - 8);
+		nitroTorch.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+
+		if ( AccelerometerDirection.x > AccelerometerSensitivity)
 		{
-			// Khi nghiên phone thì cho xe quẹo trái
-			transform.Rotate (new Vector3 (0, 30 * Time.deltaTime, -30 * Time.deltaTime), Space.Self);
+			if (transform.eulerAngles.z > 330 || Mathf.Abs(transform.eulerAngles.z) < 1
+			    || (transform.eulerAngles.z >= 0 && transform.eulerAngles.z <= 32)){
+
+				if (transform.eulerAngles.z > 320 || Mathf.Abs(transform.eulerAngles.z) < 1)
+					angle = Mathf.Min(transform.eulerAngles.z, 360 - transform.eulerAngles.z);
+				else 
+					angle = 0;
+				
+				if (angle != 0)
+					transform.Rotate (new Vector3 (0, 0 * Time.deltaTime, -50 * Time.deltaTime * AccelerometerDirection.x * 2.0f), Space.Self);
+				else 
+					transform.Rotate (new Vector3 (0, 0 * Time.deltaTime, -100 * Time.deltaTime * AccelerometerDirection.x * 2.0f), Space.Self);
+			}
+			this.GetComponent<CharacterController>().Move (turnRight * Time.deltaTime * AccelerometerDirection.x * 2.0f);
 		}
 		else if (AccelerometerDirection.x < -AccelerometerSensitivity)
 		{
-			// Quẹo phải
-			transform.Rotate (new Vector3 (0, -30 * Time.deltaTime, 30 * Time.deltaTime), Space.Self);
+			Debug.Log("left");
+			if (transform.eulerAngles.z < 30 || Mathf.Abs(transform.eulerAngles.z) < 1
+			    || (transform.eulerAngles.z <= 360 && transform.eulerAngles.z >= 328)){
+
+				if (transform.eulerAngles.z < 30 || Mathf.Abs(transform.eulerAngles.z) < 1)
+					angle = transform.eulerAngles.z;
+				else 
+					angle = 0;
+
+				if (angle != 0)
+					transform.Rotate (new Vector3 (0, -0 * Time.deltaTime, 50 * Time.deltaTime * -AccelerometerDirection.x * 2.0f), Space.Self);
+				else 
+					transform.Rotate (new Vector3 (0, -0 * Time.deltaTime, 100 * Time.deltaTime -AccelerometerDirection.x * 2.0f), Space.Self);
+			}
+			this.GetComponent<CharacterController>().Move (turnLeft * Time.deltaTime * -AccelerometerDirection.x * 2.0f);
+
 		}
 		else
 		{
@@ -81,26 +131,32 @@ public class PlayerControl : MonoBehaviour {
 			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, 0), 7 * Time.deltaTime);
 		}
 	}
-	
 
 	IEnumerator timeToGameOver(){
-		while (Time.realtimeSinceStartup - currentTime < 0.4)
+		while (Time.realtimeSinceStartup - currentTime < 1.8)
 			yield return null;
 		Time.timeScale = 0;
-		while (Time.realtimeSinceStartup - currentTime < 4)
+		while (Time.realtimeSinceStartup - currentTime < 2)
 			yield return null;
 		for (int i=0; i<10; i++){
 			
-			if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Rank" + i.ToString() + "Name")){
-				Debug.Log(PlayerPrefs.GetInt("Rank" + i.ToString() + "Score"));
+			if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Rank" + i.ToString() + "Score")){
+				//Debug.Log(PlayerPrefs.GetInt("Rank" + i.ToString() + "Score"));
+				//Debug.Log(PlayerPrefs.GetInt("Score"));
 				for (int j = 9; j>i; j--){
 					PlayerPrefs.SetString("Rank" + j.ToString() + "Name", PlayerPrefs.GetString("Rank" + (j-1).ToString() + "Name"));
 					PlayerPrefs.SetInt("Rank" + j.ToString() + "Score", PlayerPrefs.GetInt("Rank" + (j-1).ToString() + "Score"));
 				}
+				PlayerPrefs.SetInt("Rank", i);
 				Application.LoadLevel(5);
+				//Debug.Log(i);
+				newHighScore = true;
+				break;
 			}
 		}
-		//Application.LoadLevel(3);
+
+		if (newHighScore == false) 
+			Application.LoadLevel(3);
 	}
 	
 	void OnTriggerEnter (Collider other){
@@ -115,12 +171,20 @@ public class PlayerControl : MonoBehaviour {
 				CoinNum += 10;
 				CoinLabel.text = CoinLabel.text.Substring(0, 5) + CoinNum.ToString();
 			}else{
-				other.renderer.enabled = false;
-				devilRiderAnimator.SetBool("Dead", true);
+				Vector3 np = other.transform.position;
+				np.x = 0;
+				np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));
+				other.transform.position = np;
+				Time.timeScale = 0.5f;
+				devilRiderAnimator.Play("Dead");
+				//devilRiderAnimator.SetBool("Dead", true);
 				currentTime = Time.realtimeSinceStartup;
 				PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + CoinNum);
-				
+				audio.Stop();
+				audio.PlayOneShot(crashSound);
+
 				StartCoroutine(timeToGameOver());
+				//Application.LoadLevel(3);
 			}
 		}
 
@@ -131,25 +195,31 @@ public class PlayerControl : MonoBehaviour {
 		}
 
         if (other.name == "Gun") {
+
+			audio.PlayOneShot(gunCollectingSound);
 			PlayerPrefs.SetInt("canShoot", 3);
 		 	Sung.renderer.enabled = true;
         }
+
+		if (other.name == "Nitro"){
+			audio.PlayOneShot(nitroSound);
+		}
     }
 
 	void OnGUI(){
-		if (GUI.Button (new Rect (Screen.width - 35, 10, 30, 30), "=")) {
+		if (GUI.Button (new Rect (Screen.width - 55, 10, 50, 50), "=")) {
 			Time.timeScale = 0;
 			flag = true;
 
 		}
 		if (flag) {
-			GUI.Box(new Rect (Screen.width/2-50, Screen.height/2-30, 100, 60),"");
-			if (GUI.Button (new Rect (Screen.width/2+5, Screen.height/2-15, 30, 30), ">")) 
+			GUI.Box(new Rect (Screen.width/2-100, Screen.height/2-50, 200, 100),"");
+			if (GUI.Button (new Rect (Screen.width/2+30, Screen.height/2-25, 50, 50), ">")) 
 			{
 				Time.timeScale = 1;
 				flag = false;
 			}
-			if (GUI.Button (new Rect (Screen.width/2-35, Screen.height/2-15, 30, 30), "<")) 
+			if (GUI.Button (new Rect (Screen.width/2-80, Screen.height/2-25, 50, 50), "<")) 
 			{
 				Time.timeScale = 1;
 				flag = false;

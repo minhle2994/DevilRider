@@ -11,6 +11,9 @@ public class CountingScore : MonoBehaviour {
 	private double timeToAnimationShoot = 0.1;
 	private double TimeNeedToAnimationShoot = 0.1;
 	private bool isShooting = false;
+	public ParticleSystem bomb;
+	public AudioClip shootSound;
+
 	// Use this for initialization
 	void Start () {
         aim.transform.renderer.enabled = false;
@@ -28,17 +31,15 @@ public class CountingScore : MonoBehaviour {
 			if (child.position.z < DevilRider.transform.position.z && isCounted[i] == 0){
 				Score ++;
 				isCounted[i] = 1;
-				Debug.Log(Score);
 				ScoreLabel.text = ScoreLabel.text.Substring(0, 6) + Score.ToString();
 			}
-			if (child.position.z > DevilRider.transform.position.z && isCounted[i] == 1){
+			if (child.position.z - DevilRider.transform.position.z > 5 && isCounted[i] == 1){
 				isCounted[i] = 0;
 			}			 
 			float dist = child.position.z - DevilRider.transform.position.z;
             if (dist > 0 && (nearestDist < 0 || nearestDist > dist)) {
                 nearestObj = i;
                 nearestDist = dist;
-				Debug.Log(DevilRider.transform.position.z);
             }
 		}
 		if (isShooting) 
@@ -68,6 +69,9 @@ public class CountingScore : MonoBehaviour {
                 Vector3 np = transform.GetChild(nearestObj).position;
                 np.x = 0;
                 np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(58, 60));
+				bomb.transform.position = transform.GetChild(nearestObj).position;
+				audio.PlayOneShot(shootSound);
+				bomb.Play ();
                 transform.GetChild(nearestObj).position = np;
                 Score = Score + 5;
                 ScoreLabel.text = ScoreLabel.text.Substring(0, 6) + Score.ToString();

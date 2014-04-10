@@ -49,6 +49,7 @@
      <Compile Include="Assets\Script\CarControl.cs" />
      <Compile Include="Assets\Script\CoinControl.cs" />
      <Compile Include="Assets\Script\CountingScore.cs" />
+     <Compile Include="Assets\Script\Credit.cs" />
      <Compile Include="Assets\Script\EnterName.cs" />
      <Compile Include="Assets\Script\GameOver.cs" />
      <Compile Include="Assets\Script\GunControl.cs" />
@@ -62,6 +63,7 @@
      <Compile Include="Assets\Script\TreeLooping.cs" />
      <Compile Include="Assets\Script\WallLooping.cs" />
      <Compile Include="Assets\Script\hellmountainControl.cs" />
+     <Compile Include="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,13 +13,13 @@ public class GameOver : MonoBehaviour {
 	void OnGUI(){
 		GUI.DrawTexture (new Rect(0, 0, Screen.width, Screen.height), gameOverTexture);
 
-		if (GUI.Button (new Rect (6 * Screen.width / 20, 4 * Screen.height / 5, Screen.width / 10, Screen.height / 10), "REPLAY")) {
+		if (GUI.Button (new Rect (Screen.width / 2 - 120, 4*Screen.height / 5, 90, 30), "REPLAY")) {
 			Application.LoadLevel(2);
 		}
 
-        if (GUI.Button (new Rect (12 * Screen.width / 20, 4 * Screen.height / 5, Screen.width / 10, Screen.height / 10), "BACK")) {
-            Application.LoadLevel(1);
-        }
+		if (GUI.Button (new Rect (Screen.width / 2 + 50, 4*Screen.height / 5, 90, 30), "BACK")) {
+			Application.LoadLevel(1);
+		}
 	}
 	
 	// Update is called once per frame
