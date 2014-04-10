@@ -44,29 +44,30 @@ public class PlayerControl : MonoBehaviour {
   }
     
 	void Update () {
-	}
-
-	void FixedUpdate(){
 		detectPlatform ();
 		if(MovingSpeed < 35) MovingSpeed += Time.deltaTime / 6;
 		movementManagement ();
 	}
 
+	void FixedUpdate(){
+
+	}
+
 	// Detect the platform which is running
 	void detectPlatform(){
-				if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer) {
+				//if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer) {
 						AccelerometerDirection = Input.acceleration;   
-				} else {
-						if (Input.GetKey (KeyCode.LeftArrow)) {
-								AccelerometerDirection.x -=  0.01f;
-						}else 
-							if (Input.GetKey (KeyCode.RightArrow)) {
-									AccelerometerDirection.x +=  0.01f;
-							} 
-								else {
-										AccelerometerDirection.x = 0;
-								}
-				}
+//				} else {
+//						if (Input.GetKey (KeyCode.LeftArrow)) {
+//								AccelerometerDirection.x -=  0.01f;
+//						}else 
+//							if (Input.GetKey (KeyCode.RightArrow)) {
+//									AccelerometerDirection.x +=  0.01f;
+//							} 
+//								else {
+//										AccelerometerDirection.x = 0;
+//								}
+//				}
 		}
 
 
@@ -85,9 +86,11 @@ public class PlayerControl : MonoBehaviour {
 						nitroTorch.renderer.enabled = true;
 		if(nitroState == false)
 						nitroTorch.renderer.enabled = false;
-		if((transform.eulerAngles.z >= 315) || (transform.eulerAngles.z <= 45))
-			if((this.transform.position.x > -4.5f) && (this.transform.position.x < 4.5f))
-				transform.eulerAngles = new Vector3 (0, 10* AccelerometerDirection.x, -40 * AccelerometerDirection.x);
+		if ((transform.eulerAngles.z >= 315) || (transform.eulerAngles.z <= 45))
+				if ((this.transform.position.x > -4.5f) && (this.transform.position.x < 4.5f)) {
+						transform.eulerAngles = new Vector3 (0, 0, Mathf.Slerp()
+						
+				}
 		else transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, 0), 7 * Time.deltaTime);
 		if (AccelerometerDirection.x > AccelerometerSensitivity)
 		{
