@@ -48,9 +48,6 @@ public class PlayerControl : MonoBehaviour {
   }
     
 	void Update () {
-	}
-
-	void FixedUpdate(){
 		detectPlatform ();
 		if (baseSpeed < 40) {
 			baseSpeed += Time.deltaTime/10;
@@ -60,21 +57,12 @@ public class PlayerControl : MonoBehaviour {
 		movementManagement ();
 	}
 
+	void FixedUpdate(){
+
+	}
+
 	// Detect the platform which is running
 	void detectPlatform(){
-//		if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer) {
-//						AccelerometerDirection = Input.acceleration;   
-//		} else {
-//				if (Input.GetKey (KeyCode.LeftArrow)) {
-//						AccelerometerDirection.x = AccelerometerSensitivity - 1;
-//				}
-//				else if (Input.GetKey (KeyCode.RightArrow)) {
-//						AccelerometerDirection.x = -AccelerometerSensitivity + 1;
-//				}
-//				else {
-//						AccelerometerDirection.x = 0.0f;
-//				}
-//		}
 		AccelerometerDirection = Input.acceleration;   
 		AccelerometerDirection.x = Mathf.Min (AccelerometerDirection.x, 0.7f);
 	}
@@ -82,19 +70,21 @@ public class PlayerControl : MonoBehaviour {
 
 	
 	void movementManagement(){
-		// Di chuyển xe thẳng hướng phía trước
-		//transform.Translate(new Vector3(0, 0, MovingSpeed * Time.deltaTime));
+
 		moveDirection = transform.TransformDirection (new Vector3 (0, 0, MovingSpeed));
 
-		//Debug.Log (transform.eulerAngles.z);
-		//Debug.Log (AccelerometerDirection.x);
+
 		this.GetComponent<CharacterController>().Move (moveDirection * Time.deltaTime);
 		// Camera cũng phải chạy theo, giữ 1 khoảng cách nhất định với xe
 		Camera.main.transform.position = new Vector3(transform.position.x , transform.position.y + 5, transform.position.z - 8);
 		nitroTorch.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
 
-		if ( AccelerometerDirection.x > AccelerometerSensitivity)
-		{
+		if (nitroState == true)
+						nitroTorch.renderer.enabled = true;
+		if(nitroState == false)
+						nitroTorch.renderer.enabled = false;
+		// turn right 
+		if ( AccelerometerDirection.x > AccelerometerSensitivity){
 			if (transform.eulerAngles.z > 330 || Mathf.Abs(transform.eulerAngles.z) < 1
 			    || (transform.eulerAngles.z >= 0 && transform.eulerAngles.z <= 32)){
 
@@ -110,9 +100,10 @@ public class PlayerControl : MonoBehaviour {
 			}
 			this.GetComponent<CharacterController>().Move (turnRight * Time.deltaTime * AccelerometerDirection.x * 2.0f);
 		}
+
+		// turn left
 		else if (AccelerometerDirection.x < -AccelerometerSensitivity)
 		{
-			Debug.Log("left");
 			if (transform.eulerAngles.z < 30 || Mathf.Abs(transform.eulerAngles.z) < 1
 			    || (transform.eulerAngles.z <= 360 && transform.eulerAngles.z >= 328)){
 
