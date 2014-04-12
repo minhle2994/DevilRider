@@ -23,6 +23,7 @@ public class NitroControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		maxSpeed = playerControl.baseSpeed + 20;
 		handleWhenCameraOver ();
 		currentSpeed = playerControl.MovingSpeed;
 		handleWithNitro ();

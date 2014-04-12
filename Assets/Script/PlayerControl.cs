@@ -25,9 +25,18 @@ public class PlayerControl : MonoBehaviour {
 	private bool newHighScore = false;
 	public bool nitroState;
 	public GameObject nitroTorch;
-	public Vector3 turnLeft, turnRight;
+	private Vector3 turnLeft, turnRight;
 	private float angle;
 	public float baseSpeed = 20.0f;
+	public GameObject[] car;
+	private float[,] carPosX= new float[3,5]{{-1.5f ,-1.5f ,2.5f ,1 ,4},
+											 {5 ,-1.5f ,2.4f ,3.5f , -2},
+											 {2.4f ,-2,4 ,5 , -1.4f}};
+	private float[,] carPosZ= new float[3,5]{{10 ,25 ,40 ,55 ,70},
+										 	 {10 ,30 ,50 ,60 ,70},
+											 {20 ,35, 45, 55 ,75}};
+	private int carManage = 0;
+	private float firstRoad = -10;
 
     void Start () {
 		Time.timeScale = 1;
@@ -40,12 +49,10 @@ public class PlayerControl : MonoBehaviour {
 		PlayerPrefs.SetInt ("Score", 0);
 		flag = false;
 		newHighScore = false;
-		turnRight = transform.TransformDirection (new Vector3 (10, 0, 0));
-		turnLeft = transform.TransformDirection (new Vector3 (-10, 0, 0));
+		turnRight = transform.TransformDirection (new Vector3 (12, 0, 0));
+		turnLeft = transform.TransformDirection (new Vector3 (-12, 0, 0));
 		nitroState = false;
-
   }
-    
 	void Update () {
 		detectPlatform ();
 		if (baseSpeed < 40) {
@@ -54,6 +61,15 @@ public class PlayerControl : MonoBehaviour {
 				MovingSpeed = baseSpeed;
 		}
 		movementManagement ();
+		if (this.transform.position.z > car[4+carManage].transform.position.z+10) 
+		{
+			firstRoad = car[4+carManage].transform.position.z+95;
+
+			int x = Random.Range(0,2);
+			for (int i=0; i<5; i++)
+				car[i+carManage].transform.position = new Vector3 (carPosX [x, i]-1,1,carPosZ[x,i]+firstRoad);
+			carManage  = (carManage+5)%10;
+		}
 
 	}
 
@@ -190,6 +206,7 @@ public class PlayerControl : MonoBehaviour {
 			audio.PlayOneShot(nitroSound);
 		}
 	}
+
 	void OnGUI(){
 		if (GUI.Button (new Rect (Screen.width - 55, 10, 50, 50), "=")) {
 			Time.timeScale = 0;
