@@ -13,6 +13,8 @@ public class CountingScore : MonoBehaviour {
 	private bool isShooting = false;
 	public ParticleSystem bomb;
 	public AudioClip shootSound;
+	public GUIText CoinLabel;
+	public int CoinNum;
 
 	// Use this for initialization
 	void Start () {
@@ -74,6 +76,8 @@ public class CountingScore : MonoBehaviour {
 				bomb.Play ();
                 transform.GetChild(nearestObj).position = np;
                 Score = Score + 5;
+				CoinNum += 100;
+				CoinLabel.text = CoinLabel.text.Substring(0, 5) + CoinNum.ToString();
                 ScoreLabel.text = ScoreLabel.text.Substring(0, 6) + Score.ToString();
                 PlayerPrefs.SetInt("canShoot", PlayerPrefs.GetInt("canShoot")-1);
 				playerControl.devilRiderAnimator.SetBool("Shoot", true);

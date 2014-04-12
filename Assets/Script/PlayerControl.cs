@@ -8,8 +8,7 @@ public class PlayerControl : MonoBehaviour {
     private Vector3 AccelerometerDirection;             // Trục cảm ứng nghiên
     public float AccelerometerSensitivity = 0.1f;      // Độ nhạy cảm ứng nghiên
 
-	public GUIText CoinLabel;
-	public int CoinNum = 0;
+
 	public AudioClip collectCoinSound;
 	public AudioClip crashSound;
 	public AudioClip gunCollectingSound;
@@ -55,6 +54,7 @@ public class PlayerControl : MonoBehaviour {
 				MovingSpeed = baseSpeed;
 		}
 		movementManagement ();
+
 	}
 
 	void FixedUpdate(){
@@ -70,7 +70,7 @@ public class PlayerControl : MonoBehaviour {
 
 	
 	void movementManagement(){
-
+	
 		moveDirection = transform.TransformDirection (new Vector3 (0, 0, MovingSpeed));
 
 
@@ -153,40 +153,29 @@ public class PlayerControl : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter (Collider other){
-		if (other.name == "Car") {
+
+		if (other.name == "Car" || other.name == "Wall") {
 			other.renderer.enabled = false;
 
-			if(nitroControl.nitroState == true || MovingSpeed > 40f){
-				Vector3 np = other.transform.position;
-				np.x = 0;
-				np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));
-				other.transform.position = np;
-				CoinNum += 10;
-				CoinLabel.text = CoinLabel.text.Substring(0, 5) + CoinNum.ToString();
-			}else{
-				Vector3 np = other.transform.position;
-				np.x = 0;
-				np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));
-				other.transform.position = np;
-				Time.timeScale = 0.5f;
-				devilRiderAnimator.Play("Dead");
-				//devilRiderAnimator.SetBool("Dead", true);
-				currentTime = Time.realtimeSinceStartup;
-				PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + CoinNum);
-				audio.Stop();
-				audio.PlayOneShot(crashSound);
+			Vector3 np = other.transform.position;
+			np.x = 0;
+			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));
+			other.transform.position = np;
+			Time.timeScale = 0.5f;
+			AccelerometerSensitivity = 69;
 
-				StartCoroutine(timeToGameOver());
-				//Application.LoadLevel(3);
+			devilRiderAnimator.Play("Dead");
+
+			currentTime = Time.realtimeSinceStartup;
+
+			audio.Stop();
+			audio.PlayOneShot(crashSound);
+
+			StartCoroutine(timeToGameOver());
+			//Application.LoadLevel(3);
 			}
-		}
-
-		if (other.name == "Coin") {
-			CoinNum++;
-			CoinLabel.text = CoinLabel.text.Substring(0, 5) + CoinNum.ToString();
-			audio.PlayOneShot(collectCoinSound, 1);
-		}
-
+	
+	
         if (other.name == "Gun") {
 
 			audio.PlayOneShot(gunCollectingSound);
@@ -197,8 +186,7 @@ public class PlayerControl : MonoBehaviour {
 		if (other.name == "Nitro"){
 			audio.PlayOneShot(nitroSound);
 		}
-    }
-
+	}
 	void OnGUI(){
 		if (GUI.Button (new Rect (Screen.width - 55, 10, 50, 50), "=")) {
 			Time.timeScale = 0;
