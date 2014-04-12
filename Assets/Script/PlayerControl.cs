@@ -154,13 +154,16 @@ public class PlayerControl : MonoBehaviour {
 	
 	void OnTriggerEnter (Collider other){
 
-		if (other.name == "Car" || other.name == "Wall") {
-			other.renderer.enabled = false;
+		if (other.name == "Car" || other.name == "Wall" || other.name == "GhostRider") {
+			//other.renderer.enabled = false;
+			MovingSpeed = 10;
+			baseSpeed = 10;
+			PlayerPrefs.SetInt("canShoot", 0);
 
-			Vector3 np = other.transform.position;
-			np.x = 0;
-			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));
-			other.transform.position = np;
+			//			Vector3 np = other.transform.position;
+//			np.x = 0;
+//			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));
+//			other.transform.position = np;
 			Time.timeScale = 0.5f;
 			AccelerometerSensitivity = 69;
 
