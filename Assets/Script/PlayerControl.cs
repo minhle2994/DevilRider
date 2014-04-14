@@ -12,19 +12,22 @@ public class PlayerControl : MonoBehaviour {
 	public AudioClip collectCoinSound;
 	public AudioClip crashSound;
 	public AudioClip gunCollectingSound;
+	public AudioClip normalSound;
 	public AudioClip nitroSound;
+	public AudioClip getNitroSound;
+
 	private Vector3 moveDirection = Vector3.zero;
 	public Animator devilRiderAnimator;
 	public float currentTime = 0;
 	public GameObject nitroItem;
 	public NitroControl nitroControl;
+	public bool nitroState;
+	public GameObject nitroTorch;
 	public GameObject Sung;
 	public GUILayer pauseLayer;
 	//public bool canShoot = false;
 	public bool flag = false;
 	private bool newHighScore = false;
-	public bool nitroState;
-	public GameObject nitroTorch;
 	private Vector3 turnLeft, turnRight;
 	private float angle;
 	public float baseSpeed = 20.0f;
@@ -37,6 +40,12 @@ public class PlayerControl : MonoBehaviour {
 											 {20 ,35, 45, 55 ,75}};
 	private int carManage = 0;
 	private float firstRoad = -10;
+	public bool stopCameraStatus;
+	public Vector3 stopCameraPosition;
+
+	public bool callOneTime1 = true;
+	public bool callOneTime2 = true;
+	public bool dead = false;
 
     void Start () {
 		Time.timeScale = 1;
@@ -52,6 +61,8 @@ public class PlayerControl : MonoBehaviour {
 		turnRight = transform.TransformDirection (new Vector3 (12, 0, 0));
 		turnLeft = transform.TransformDirection (new Vector3 (-12, 0, 0));
 		nitroState = false;
+		stopCameraStatus = false;
+		audio.clip = normalSound;
   }
 	void Update () {
 		detectPlatform ();
@@ -70,7 +81,20 @@ public class PlayerControl : MonoBehaviour {
 				car[i+carManage].transform.position = new Vector3 (carPosX [x, i]-1,1,carPosZ[x,i]+firstRoad);
 			carManage  = (carManage+5)%10;
 		}
-
+		if ((nitroState == true) && (callOneTime1 == true)) {
+			audio.clip = nitroSound;
+			audio.Play ();
+			callOneTime1 = false;
+			callOneTime2 = true;
+		}
+		if ((nitroState == false) && (callOneTime2 == true)) {
+			if(dead == false){
+				callOneTime1 = true;
+				audio.clip = normalSound;
+				audio.Play ();
+				callOneTime2 = false;
+			}
+		}
 	}
 
 	void FixedUpdate(){
@@ -92,8 +116,11 @@ public class PlayerControl : MonoBehaviour {
 
 		this.GetComponent<CharacterController>().Move (moveDirection * Time.deltaTime);
 		// Camera cũng phải chạy theo, giữ 1 khoảng cách nhất định với xe
-		Camera.main.transform.position = new Vector3(transform.position.x , transform.position.y + 5, transform.position.z - 8);
-		nitroTorch.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+		if (stopCameraStatus == false)
+						Camera.main.transform.position = new Vector3 (transform.position.x, transform.position.y + 5, transform.position.z - 8);
+				else 
+						Camera.main.transform.position = stopCameraPosition;
+		nitroTorch.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
 
 		if (nitroState == true)
 						nitroTorch.renderer.enabled = true;
@@ -182,12 +209,14 @@ public class PlayerControl : MonoBehaviour {
 //			other.transform.position = np;
 			Time.timeScale = 0.5f;
 			AccelerometerSensitivity = 69;
-
+			dead = true;
+			stopCameraPosition = Camera.main.transform.position;
+			stopCameraStatus = true;
+			audio.Stop();
 			devilRiderAnimator.Play("Dead");
 
 			currentTime = Time.realtimeSinceStartup;
-
-			audio.Stop();
+		
 			audio.PlayOneShot(crashSound);
 
 			StartCoroutine(timeToGameOver());
@@ -202,8 +231,8 @@ public class PlayerControl : MonoBehaviour {
 		 	Sung.renderer.enabled = true;
         }
 
-		if (other.name == "Nitro"){
-			audio.PlayOneShot(nitroSound);
+		if (other.name == "Nitro") {
+			audio.PlayOneShot(getNitroSound);		
 		}
 	}
 

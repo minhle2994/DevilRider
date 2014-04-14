@@ -7,12 +7,15 @@ public class NitroControl : MonoBehaviour {
 	private float maxSpeed = 60f;
 	public GameObject player;
 	public PlayerControl playerControl;
+	public AudioClip getNitroSound;
 	float currentSpeed;
+
 
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find ("DevilRider");
 		playerControl = player.GetComponent<PlayerControl> ();
+
 	}
 	
 	void OnGUI(){
@@ -45,13 +48,17 @@ public class NitroControl : MonoBehaviour {
 			if (Input.touchCount > 0 && nitro > 0) {
 				nitroActionOn();
 			}
-			else nitroActionOff();
+			else{
+				nitroActionOff();
+			}
 		} 
 		else {
 			if ((Input.GetKey(KeyCode.UpArrow)) && (nitro > 0)){
 				nitroActionOn();
 			}
-			else nitroActionOff();
+			else{
+				nitroActionOff();
+			}
 		}
 		
 		if (nitro == 0 && playerControl.MovingSpeed > playerControl.baseSpeed)
@@ -59,7 +66,6 @@ public class NitroControl : MonoBehaviour {
 	}
 
 	void nitroActionOn(){
-		nitroState = true;
 		playerControl.MovingSpeed = Mathf.Min(currentSpeed+0.7f, maxSpeed);
 		nitro -= 0.05f;
 		playerControl.devilRiderAnimator.SetBool ("Nitro", true);
@@ -67,7 +73,6 @@ public class NitroControl : MonoBehaviour {
 	}
 
 	void nitroActionOff(){
-		nitroState = false;
 		playerControl.devilRiderAnimator.SetBool ("Nitro", false);
 		if (playerControl.MovingSpeed > playerControl.baseSpeed)
 			playerControl.MovingSpeed -= 0.3f;
@@ -76,6 +81,7 @@ public class NitroControl : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other){
 		if (other.name == "DevilRider") {
+			audio.PlayOneShot(getNitroSound);
 			Vector3 np = transform.position;
 			np.x = 0;
 			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));
