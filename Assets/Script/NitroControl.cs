@@ -7,7 +7,7 @@ public class NitroControl : MonoBehaviour {
 	private float maxSpeed = 60f;
 	public GameObject player;
 	public PlayerControl playerControl;
-	public AudioClip getNitroSound;
+
 	float currentSpeed;
 
 
@@ -81,7 +81,7 @@ public class NitroControl : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other){
 		if (other.name == "DevilRider") {
-			audio.PlayOneShot(getNitroSound);
+
 			Vector3 np = transform.position;
 			np.x = 0;
 			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));

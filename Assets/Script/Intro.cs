@@ -12,7 +12,7 @@ public class Intro : MonoBehaviour {
 		introTexture = Resources.Load ("background") as Texture;
 		btn_play = Resources.Load ("btn_play") as Texture;
 		btn_high_score = Resources.Load ("btn_high_score") as Texture;
-		btn_credit = Resources.Load ("btn_credit") as Texture;
+		btn_credit = Resources.Load ("btn_credits") as Texture;
 		//audio.PlayOneShot (backgroundMusic);
 	}
 	
