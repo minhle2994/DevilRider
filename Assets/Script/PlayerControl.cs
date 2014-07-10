@@ -47,6 +47,7 @@ public class PlayerControl : MonoBehaviour {
 	public bool callOneTime2 = true;
 	public bool dead = false;
 
+
     void Start () {
 		Time.timeScale = 1;
         PlayerPrefs.SetInt("canShoot", 0);
@@ -117,7 +118,7 @@ public class PlayerControl : MonoBehaviour {
 		this.GetComponent<CharacterController>().Move (moveDirection * Time.deltaTime);
 		// Camera cũng phải chạy theo, giữ 1 khoảng cách nhất định với xe
 		if (stopCameraStatus == false)
-						Camera.main.transform.position = new Vector3 (transform.position.x, transform.position.y + 5, transform.position.z - 8);
+						Camera.main.transform.position = new Vector3 (transform.position.x, transform.position.y + 1.7f, transform.position.z - 5.2f);
 				else 
 						Camera.main.transform.position = stopCameraPosition;
 		nitroTorch.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
@@ -141,6 +142,7 @@ public class PlayerControl : MonoBehaviour {
 				else 
 					transform.Rotate (new Vector3 (0, 0 * Time.deltaTime, -100 * Time.deltaTime * AccelerometerDirection.x * 2.0f), Space.Self);
 			}
+			//Debug.Log("right " + transform.eulerAngles.z);
 			this.GetComponent<CharacterController>().Move (turnRight * Time.deltaTime * AccelerometerDirection.x * 2.0f);
 		}
 
@@ -160,6 +162,7 @@ public class PlayerControl : MonoBehaviour {
 				else 
 					transform.Rotate (new Vector3 (0, -0 * Time.deltaTime, 100 * Time.deltaTime -AccelerometerDirection.x * 2.0f), Space.Self);
 			}
+			//Debug.Log("left " + transform.eulerAngles.z);
 			this.GetComponent<CharacterController>().Move (turnLeft * Time.deltaTime * -AccelerometerDirection.x * 2.0f);
 
 		}

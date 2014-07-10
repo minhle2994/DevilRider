@@ -13,8 +13,20 @@ public class IntroScene : MonoBehaviour {
 	
 	}
 
-	public void OnPlayBtnClick()
+	public void PlayBtnClick()
 	{
-		Debug.LogWarning ("play");
+		Application.LoadLevel(2);
+	}
+
+	public void HighScoreBtnClick(){
+		Application.LoadLevel(4);
+	}
+
+	public void CreditsBtnClick(){
+		Application.LoadLevel(6);
+	}
+
+	public void HighScoreBack(){
+		Application.LoadLevel(1);
 	}
 }
