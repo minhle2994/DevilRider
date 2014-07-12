@@ -46,6 +46,45 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AdMobPlugin\Scripts\AdMobPlugin.cs" />
+     <Compile Include="Assets\AdMobPlugin\Scripts\AdMobPluginDebug.cs" />
+     <Compile Include="Assets\AdMobPlugin\Scripts\AdMobPluginMockup.cs" />
+     <Compile Include="Assets\GooglePlayGames\BasicApi\Achievement.cs" />
+     <Compile Include="Assets\GooglePlayGames\BasicApi\DummyClient.cs" />
+     <Compile Include="Assets\GooglePlayGames\BasicApi\IPlayGamesClient.cs" />
+     <Compile Include="Assets\GooglePlayGames\BasicApi\Multiplayer\IRealTimeMultiplayerClient.cs" />
+     <Compile Include="Assets\GooglePlayGames\BasicApi\Multiplayer\ITurnBasedMultiplayerClient.cs" />
+     <Compile Include="Assets\GooglePlayGames\BasicApi\Multiplayer\Invitation.cs" />
+     <Compile Include="Assets\GooglePlayGames\BasicApi\Multiplayer\MatchOutcome.cs" />
+     <Compile Include="Assets\GooglePlayGames\BasicApi\Multiplayer\Participant.cs" />
+     <Compile Include="Assets\GooglePlayGames\BasicApi\Multiplayer\Player.cs" />
+     <Compile Include="Assets\GooglePlayGames\BasicApi\Multiplayer\RealTimeMultiplayerListener.cs" />
+     <Compile Include="Assets\GooglePlayGames\BasicApi\Multiplayer\TurnBasedMatch.cs" />
+     <Compile Include="Assets\GooglePlayGames\BasicApi\OnStateLoadedListener.cs" />
+     <Compile Include="Assets\GooglePlayGames\ISocialPlatform\PlayGamesAchievement.cs" />
+     <Compile Include="Assets\GooglePlayGames\ISocialPlatform\PlayGamesLocalUser.cs" />
+     <Compile Include="Assets\GooglePlayGames\ISocialPlatform\PlayGamesPlatform.cs" />
+     <Compile Include="Assets\GooglePlayGames\ISocialPlatform\PlayGamesScore.cs" />
+     <Compile Include="Assets\GooglePlayGames\ISocialPlatform\PlayGamesUserProfile.cs" />
+     <Compile Include="Assets\GooglePlayGames\OurUtils\Logger.cs" />
+     <Compile Include="Assets\GooglePlayGames\OurUtils\Misc.cs" />
+     <Compile Include="Assets\GooglePlayGames\OurUtils\PlayGamesHelperObject.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\Android\AchievementBank.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\Android\AndroidClient.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\Android\AndroidRtmpClient.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\Android\AndroidTbmpClient.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\Android\GameHelperManager.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\Android\JavaConsts.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\Android\JavaUtil.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\Android\NoopProxy.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\Android\OnStateResultProxy.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\PlayGamesClientFactory.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\iOS\IOSClient.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\iOS\IOSRtmpClient.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\iOS\MiniJSON.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\iOS\MonoPInvokeCallbackAttribute.cs" />
+     <Compile Include="Assets\GooglePlayGames\Platforms\iOS\iOSTbmpClient.cs" />
+     <Compile Include="Assets\GooglePlayGames\PluginVersion.cs" />
      <Compile Include="Assets\IntroScene.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
@@ -211,18 +250,24 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Masked Colored.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 3.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
+     <None Include="Assets\AdMobPlugin\LICENSE.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (AlphaClip) .shader" />
+     <None Include="Assets\Editor\template-AndroidManifest.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Header.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (AlphaClip).shader" />
+     <None Include="Assets\Plugins\Android\BaseGameUtils\AndroidManifest.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (AlphaClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 1.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 3.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Normal.txt" />
+     <None Include="Assets\Editor\projsettings.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 2.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (SoftClip).shader" />
+     <None Include="Assets\Editor\template-GPGSParams.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 3.shader" />
+     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 2.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (SoftClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (SoftClip).shader" />
@@ -233,6 +278,7 @@
      <None Include="Assets\NGUI\Examples\Other\English.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text.shader" />
      <None Include="Assets\NGUI\Examples\Other\French.txt" />
+     <None Include="Assets\Plugins\Android\BaseGameUtils\res\values\gamehelper_strings.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
@@ -243,6 +289,9 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
      <None Include="Assets\NGUI\Examples\Resources\Localization.txt" />
+ <Reference Include="GPGSUtils">
+ <HintPath>Assets\Plugins\GPGSUtils.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
