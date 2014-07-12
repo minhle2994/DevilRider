@@ -239,27 +239,5 @@ public class PlayerControl : MonoBehaviour {
 		}
 	}
 
-	void OnGUI(){
-		if (GUI.Button (new Rect (Screen.width - 55, 10, 50, 50), "=")) {
-			Time.timeScale = 0;
-			flag = true;
-
-		}
-		if (flag) {
-			GUI.Box(new Rect (Screen.width/2-100, Screen.height/2-50, 200, 100),"");
-			if (GUI.Button (new Rect (Screen.width/2+30, Screen.height/2-25, 50, 50), ">")) 
-			{
-				Time.timeScale = 1;
-				flag = false;
-			}
-			if (GUI.Button (new Rect (Screen.width/2-80, Screen.height/2-25, 50, 50), "<")) 
-			{
-				Time.timeScale = 1;
-				flag = false;
-				Application.LoadLevel(1);
-			}
-		}
-
-	}
 }
  
