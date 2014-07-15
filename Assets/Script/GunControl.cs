@@ -13,6 +13,7 @@ public class GunControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		transform.Rotate(new Vector3(40 * Time.deltaTime, 120* Time.deltaTime, 50 * Time.deltaTime), Space.Self);
 		if (Camera.main.transform.position.z >= (this.transform.position.z + 20)) {
 			Vector3 np = this.transform.position;
 			np.x = 0;
