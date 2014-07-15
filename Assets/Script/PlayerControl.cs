@@ -142,8 +142,9 @@ public class PlayerControl : MonoBehaviour {
 				else 
 					transform.Rotate (new Vector3 (0, 0 * Time.deltaTime, -100 * Time.deltaTime * AccelerometerDirection.x * 2.0f), Space.Self);
 			}
+
 			//Debug.Log("right " + transform.eulerAngles.z);
-			this.GetComponent<CharacterController>().Move (turnRight * Time.deltaTime * AccelerometerDirection.x * 2.0f);
+			this.GetComponent<CharacterController>().Move (turnRight * Time.deltaTime * AccelerometerDirection.x * 1.0f);
 		}
 
 		// turn left
@@ -162,8 +163,9 @@ public class PlayerControl : MonoBehaviour {
 				else 
 					transform.Rotate (new Vector3 (0, -0 * Time.deltaTime, 100 * Time.deltaTime -AccelerometerDirection.x * 2.0f), Space.Self);
 			}
+			if(transform.eulerAngles.z >= 0 && transform.eulerAngles.z < 40)
 			//Debug.Log("left " + transform.eulerAngles.z);
-			this.GetComponent<CharacterController>().Move (turnLeft * Time.deltaTime * -AccelerometerDirection.x * 2.0f);
+			this.GetComponent<CharacterController>().Move (turnLeft * Time.deltaTime * -AccelerometerDirection.x * 1.0f);
 
 		}
 		else
