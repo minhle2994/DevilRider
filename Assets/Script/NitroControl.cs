@@ -7,15 +7,16 @@ public class NitroControl : MonoBehaviour {
 	private float maxSpeed = 60f;
 	public GameObject player;
 	public PlayerControl playerControl;
+	public GameObject effect;
 
 	float currentSpeed;
 
 
 	// Use this for initialization
 	void Start () {
-		player = GameObject.Find ("DevilRider");
+		player = GameObject.Find ("xe");
 		playerControl = player.GetComponent<PlayerControl> ();
-
+		effect.transform.position = this.transform.position;
 	}
 	
 	void OnGUI(){
@@ -26,6 +27,7 @@ public class NitroControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		transform.Rotate(new Vector3(0 * Time.deltaTime, 120* Time.deltaTime, 0 * Time.deltaTime), Space.World);
 		maxSpeed = playerControl.baseSpeed + 20;
 		handleWhenCameraOver ();
 		currentSpeed = playerControl.MovingSpeed;
@@ -36,8 +38,9 @@ public class NitroControl : MonoBehaviour {
 		if (Camera.main.transform.position.z >= (this.transform.position.z + 20)) {
 			Vector3 np = this.transform.position;
 			np.x = 0;
-			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(80, 90));
+			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(300, 400));
 			this.transform.position = np;
+			effect.transform.position = this.transform.position;
 			if (this.renderer.enabled == false)
 				this.renderer.enabled = true;
 		}
@@ -80,12 +83,13 @@ public class NitroControl : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other){
-		if (other.name == "DevilRider") {
+		if (other.name == "xe") {
 
 			Vector3 np = transform.position;
 			np.x = 0;
-			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(90, 110));
+			np += new Vector3(Random.Range(-4.5f, 4.5f), 0, Random.Range(300, 400));
 			transform.position = np;
+			effect.transform.position = this.transform.position;
 			nitro += 20;
 			if (nitro > 100) nitro = 100;
 		}

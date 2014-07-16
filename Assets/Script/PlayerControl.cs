@@ -27,7 +27,7 @@ public class PlayerControl : MonoBehaviour {
 	public GUILayer pauseLayer;
 	//public bool canShoot = false;
 	public bool flag = false;
-	private bool newHighScore = false;
+
 	private Vector3 turnLeft, turnRight;
 	private float angle;
 	public float baseSpeed = 20.0f;
@@ -36,6 +36,9 @@ public class PlayerControl : MonoBehaviour {
 	public UITexture BestScore;
 	public UILabel Best;
 	public UILabel Score;
+	public UIButton BackBtn;
+	public UIButton ReplayHighscore;
+	public UIButton PauseBtn;
 
 	private float[,] carPosX= new float[3,5]{{-1.5f ,-1.5f ,2.5f ,1 ,4},
 											 {5 ,-1.5f ,2.4f ,3.5f , -2},
@@ -63,7 +66,7 @@ public class PlayerControl : MonoBehaviour {
 		Sung.renderer.enabled = false;
 		PlayerPrefs.SetInt ("Score", 0);
 		flag = false;
-		newHighScore = false;
+
 		turnRight = transform.TransformDirection (new Vector3 (12, 0, 0));
 		turnLeft = transform.TransformDirection (new Vector3 (-12, 0, 0));
 		nitroState = false;
@@ -72,6 +75,9 @@ public class PlayerControl : MonoBehaviour {
 		BestScore.gameObject.SetActive (false);
 		Best.gameObject.SetActive (false);
 		Score.gameObject.SetActive (false);
+		BackBtn.gameObject.SetActive (false);
+		ReplayHighscore.gameObject.SetActive (false);
+		PauseBtn.gameObject.SetActive (true);
 	}
 
 	void Update () {
@@ -190,41 +196,24 @@ public class PlayerControl : MonoBehaviour {
 		Time.timeScale = 0;
 		while (Time.realtimeSinceStartup - currentTime < 2)
 			yield return null;
-//<<<<<<< HEAD
-//		for (int i=0; i<10; i++){
-//			
-//			if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Rank" + i.ToString() + "Score")){
-//				for (int j = 9; j>i; j--){
-//					PlayerPrefs.SetString("Rank" + j.ToString() + "Name", PlayerPrefs.GetString("Rank" + (j-1).ToString() + "Name"));
-//					PlayerPrefs.SetInt("Rank" + j.ToString() + "Score", PlayerPrefs.GetInt("Rank" + (j-1).ToString() + "Score"));
-//				}
-//				PlayerPrefs.SetInt("Rank", i);
-//				Application.LoadLevel(5);
-//
-//				newHighScore = true;
-//				break;
-//			}
-//		}
-//
-//		if (newHighScore == false) 
-//			Application.LoadLevel(3);
-//=======
+
 
 		Best.text = PlayerPrefs.GetInt ("HighScore").ToString ();
 		Score.text = PlayerPrefs.GetInt ("Score").ToString ();
 		BestScore.gameObject.SetActive(true);
 		Best.gameObject.SetActive(true);
 		Score.gameObject.SetActive(true);
+		BackBtn.gameObject.SetActive (true);
+		ReplayHighscore.gameObject.SetActive (true);
+		PauseBtn.gameObject.SetActive (false);
+
 
 		if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("HighScore")){
 		
 			PlayerPrefs.SetInt("HighScore", PlayerPrefs.GetInt("Score"));
 			Social.ReportScore(PlayerPrefs.GetInt("HighScore"), "CggIppT28DoQAhAA", (bool success) => {
-				// handle success or failure
 			});
 		}
-
-//>>>>>>> 36fcab850dcfc620f69fe29a80dfa47d9c5576ca
 	}
 	
 	void OnTriggerEnter (Collider other){
