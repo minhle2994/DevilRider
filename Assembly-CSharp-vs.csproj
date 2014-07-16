@@ -49,6 +49,11 @@
      <Compile Include="Assets\AdMobPlugin\Scripts\AdMobPlugin.cs" />
      <Compile Include="Assets\AdMobPlugin\Scripts\AdMobPluginDebug.cs" />
      <Compile Include="Assets\AdMobPlugin\Scripts\AdMobPluginMockup.cs" />
+     <Compile Include="Assets\First Fantasy for Mobile\Environments\Scripts\CloudFlow.cs" />
+     <Compile Include="Assets\First Fantasy for Mobile\Environments\Scripts\FloatObject.cs" />
+     <Compile Include="Assets\First Fantasy for Mobile\Environments\Scripts\FollowObject.cs" />
+     <Compile Include="Assets\First Fantasy for Mobile\Environments\Scripts\RandomMoveOnTerrain.cs" />
+     <Compile Include="Assets\First Fantasy for Mobile\Environments\Scripts\WaterFlow.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\Achievement.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\DummyClient.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\IPlayGamesClient.cs" />
@@ -222,6 +227,7 @@
      <Compile Include="Assets\Script\CoinControl.cs" />
      <Compile Include="Assets\Script\CountingScore.cs" />
      <Compile Include="Assets\Script\Credit.cs" />
+     <Compile Include="Assets\Script\DoorLooping.cs" />
      <Compile Include="Assets\Script\EnterName.cs" />
      <Compile Include="Assets\Script\GameOver.cs" />
      <Compile Include="Assets\Script\GunControl.cs" />
@@ -232,6 +238,7 @@
      <Compile Include="Assets\Script\NitroControl.cs" />
      <Compile Include="Assets\Script\PlayerControl.cs" />
      <Compile Include="Assets\Script\SlopeLooping.cs" />
+     <Compile Include="Assets\Script\SparkleControl.cs" />
      <Compile Include="Assets\Script\StreetLooping.cs" />
      <Compile Include="Assets\Script\TreeLooping.cs" />
      <Compile Include="Assets\Script\WallLooping.cs" />
@@ -249,6 +256,7 @@
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-zh-rTW\auth_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-am\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sr\common_strings.xml" />
+     <None Include="Assets\First Fantasy for Mobile\Environments\Shaders\Mobile Transparent Vertex Color.shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hi\auth_strings.xml" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo20.txt" />
@@ -344,12 +352,14 @@
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sl\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ca\auth_strings.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (SoftClip).shader" />
+     <None Include="Assets\First Fantasy for Mobile\!Tips.txt" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-el\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ka-rGE\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-am\auth_strings.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (SoftClip).shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-pl\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hu\common_strings.xml" />
+     <None Include="Assets\First Fantasy for Mobile\Environments\Shaders\Mobile Particles Additive Culled.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hy-rAM\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-en-rIN\common_strings.xml" />
@@ -415,6 +425,7 @@
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-de\auth_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-fa\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hy-rAM\auth_strings.xml" />
+     <None Include="Assets\First Fantasy for Mobile\!Readme.txt" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ro\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-es\wallet_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ru\common_strings.xml" />
