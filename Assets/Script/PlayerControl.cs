@@ -33,6 +33,11 @@ public class PlayerControl : MonoBehaviour {
 	private float angle;
 	public float baseSpeed = 20.0f;
 	public GameObject[] car;
+
+	public UITexture BestScore;
+	public UILabel Best;
+	public UILabel Score;
+
 	private float[,] carPosX= new float[3,5]{{-1.5f ,-1.5f ,2.5f ,1 ,4},
 											 {5 ,-1.5f ,2.4f ,3.5f , -2},
 											 {2.4f ,-2,4 ,5 , -1.4f}};
@@ -64,7 +69,11 @@ public class PlayerControl : MonoBehaviour {
 		nitroState = false;
 		stopCameraStatus = false;
 		audio.clip = normalSound;
-  }
+		BestScore.gameObject.SetActive (false);
+		Best.gameObject.SetActive (false);
+		Score.gameObject.SetActive (false);
+	}
+
 	void Update () {
 		detectPlatform ();
 		if (baseSpeed < 40) {
@@ -181,28 +190,21 @@ public class PlayerControl : MonoBehaviour {
 		Time.timeScale = 0;
 		while (Time.realtimeSinceStartup - currentTime < 2)
 			yield return null;
+
+		Best.text = PlayerPrefs.GetInt ("HighScore").ToString ();
+		Score.text = PlayerPrefs.GetInt ("Score").ToString ();
+		BestScore.gameObject.SetActive(true);
+		Best.gameObject.SetActive(true);
+		Score.gameObject.SetActive(true);
+
 		if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("HighScore")){
+		
 			PlayerPrefs.SetInt("HighScore", PlayerPrefs.GetInt("Score"));
 			Social.ReportScore(PlayerPrefs.GetInt("HighScore"), "CggIppT28DoQAhAA", (bool success) => {
 				// handle success or failure
 			});
 		}
-//		for (int i=0; i<10; i++){
-//			
-//			if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Rank" + i.ToString() + "Score")){
-//				for (int j = 9; j>i; j--){
-//					PlayerPrefs.SetString("Rank" + j.ToString() + "Name", PlayerPrefs.GetString("Rank" + (j-1).ToString() + "Name"));
-//					PlayerPrefs.SetInt("Rank" + j.ToString() + "Score", PlayerPrefs.GetInt("Rank" + (j-1).ToString() + "Score"));
-//				}
-//				PlayerPrefs.SetInt("Rank", i);
-//				Application.LoadLevel(5);
-//
-//				newHighScore = true;
-//				break;
-//			}
-//		}
 
-		Application.LoadLevel(3);
 	}
 	
 	void OnTriggerEnter (Collider other){
