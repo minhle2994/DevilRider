@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GooglePlayGames;
+using UnityEngine.SocialPlatforms;
 
 public class PlayerControl : MonoBehaviour {
     public float MovingSpeed = 20f;                      // Tốc độ di chuyển của xe
@@ -27,7 +29,6 @@ public class PlayerControl : MonoBehaviour {
 	public GUILayer pauseLayer;
 	//public bool canShoot = false;
 	public bool flag = false;
-	private bool newHighScore = false;
 	private Vector3 turnLeft, turnRight;
 	private float angle;
 	public float baseSpeed = 20.0f;
@@ -58,7 +59,6 @@ public class PlayerControl : MonoBehaviour {
 		Sung.renderer.enabled = false;
 		PlayerPrefs.SetInt ("Score", 0);
 		flag = false;
-		newHighScore = false;
 		turnRight = transform.TransformDirection (new Vector3 (12, 0, 0));
 		turnLeft = transform.TransformDirection (new Vector3 (-12, 0, 0));
 		nitroState = false;
@@ -181,23 +181,28 @@ public class PlayerControl : MonoBehaviour {
 		Time.timeScale = 0;
 		while (Time.realtimeSinceStartup - currentTime < 2)
 			yield return null;
-		for (int i=0; i<10; i++){
-			
-			if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Rank" + i.ToString() + "Score")){
-				for (int j = 9; j>i; j--){
-					PlayerPrefs.SetString("Rank" + j.ToString() + "Name", PlayerPrefs.GetString("Rank" + (j-1).ToString() + "Name"));
-					PlayerPrefs.SetInt("Rank" + j.ToString() + "Score", PlayerPrefs.GetInt("Rank" + (j-1).ToString() + "Score"));
-				}
-				PlayerPrefs.SetInt("Rank", i);
-				Application.LoadLevel(5);
-
-				newHighScore = true;
-				break;
-			}
+		if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("HighScore")){
+			PlayerPrefs.SetInt("HighScore", PlayerPrefs.GetInt("Score"));
+			Social.ReportScore(PlayerPrefs.GetInt("HighScore"), "CggIppT28DoQAhAA", (bool success) => {
+				// handle success or failure
+			});
 		}
+//		for (int i=0; i<10; i++){
+//			
+//			if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Rank" + i.ToString() + "Score")){
+//				for (int j = 9; j>i; j--){
+//					PlayerPrefs.SetString("Rank" + j.ToString() + "Name", PlayerPrefs.GetString("Rank" + (j-1).ToString() + "Name"));
+//					PlayerPrefs.SetInt("Rank" + j.ToString() + "Score", PlayerPrefs.GetInt("Rank" + (j-1).ToString() + "Score"));
+//				}
+//				PlayerPrefs.SetInt("Rank", i);
+//				Application.LoadLevel(5);
+//
+//				newHighScore = true;
+//				break;
+//			}
+//		}
 
-		if (newHighScore == false) 
-			Application.LoadLevel(3);
+		Application.LoadLevel(3);
 	}
 	
 	void OnTriggerEnter (Collider other){

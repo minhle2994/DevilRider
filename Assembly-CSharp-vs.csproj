@@ -85,7 +85,6 @@
      <Compile Include="Assets\GooglePlayGames\Platforms\iOS\MonoPInvokeCallbackAttribute.cs" />
      <Compile Include="Assets\GooglePlayGames\Platforms\iOS\iOSTbmpClient.cs" />
      <Compile Include="Assets\GooglePlayGames\PluginVersion.cs" />
-     <Compile Include="Assets\IntroScene.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\UICursor.cs" />
@@ -228,6 +227,7 @@
      <Compile Include="Assets\Script\GunControl.cs" />
      <Compile Include="Assets\Script\HighScore.cs" />
      <Compile Include="Assets\Script\Intro.cs" />
+     <Compile Include="Assets\Script\IntroScene.cs" />
      <Compile Include="Assets\Script\LoadLogoStudio.cs" />
      <Compile Include="Assets\Script\NitroControl.cs" />
      <Compile Include="Assets\Script\PlayerControl.cs" />
